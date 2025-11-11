@@ -1,0 +1,146 @@
+# SCOPE — Cursor Rules: Exercices 00–03 — C++ Module 03
+
+## Règles Générales
+
+- Compilation: `c++ -Wall -Wextra -Werror -std=c++98`
+- Nommage: dossiers `ex00`–`ex03`; classes en UpperCamelCase
+- Sorties: toujours terminées par `\n` sur stdout
+- Interdits: `printf`, `*alloc`, `free`, `using namespace`, `friend`
+- STL: containers/algos interdits jusqu’aux Modules 08–09
+- Forme canonique: constructeur défaut, copie, `operator=`, destructeur
+- Headers: pas d’implémentations dans `.hpp` (hors templates); include guards
+
+---
+
+## ex00 — Aaaaand... OPEN! (ClapTrap)
+
+### Objectif
+
+- Implémenter `ClapTrap` avec gestion PV/énergie/attaque/réparation
+- Tous les constructeurs et le destructeur doivent afficher des messages
+
+### Contraintes
+
+- Fichiers: `ex00/Makefile`, `main.cpp`, `ClapTrap.hpp`, `ClapTrap.cpp`
+- C++98; pas de STL; messages conformes aux specs
+
+### Spécifications
+
+- Attributs privés:
+  - `name` (via constructeur)
+  - `hit points = 10`
+  - `energy points = 10`
+  - `attack damage = 0`
+- Méthodes publiques:
+  - `void attack(const std::string& target);`
+  - `void takeDamage(unsigned int amount);`
+  - `void beRepaired(unsigned int amount);`
+- Règles:
+  - `attack`: coûte 1 énergie; ne fait rien si PV <= 0 ou énergie <= 0; affiche
+  - `takeDamage`: décrémente PV (borné à 0); affiche
+  - `beRepaired`: +PV de `amount`, coûte 1 énergie; bloque si PV <= 0 ou
+    énergie <= 0; affiche
+- Pas d’interaction entre instances (target = string)
+
+### Acceptation
+
+- Compilation OK; messages d’action et de cycle vie imprimés
+- Newlines respectés; logique énergie/PV correcte
+
+---
+
+## ex01 — Serena, my love! (ScavTrap)
+
+### Objectif
+
+- Créer `ScavTrap` dérivé de `ClapTrap` avec stats spécifiques et messages
+- Ajouter capacité spéciale `guardGate()`
+
+### Contraintes
+
+- Fichiers: ex00 + `ScavTrap.hpp`, `ScavTrap.cpp`
+- Constructeurs/destructeur/`attack` affichent des messages distincts
+
+### Spécifications
+
+- Stats:
+  - `hit points = 100`
+  - `energy points = 50`
+  - `attack damage = 20`
+  - `name` via constructeur
+- Méthodes:
+  - Redéfinir `attack(...)` (mêmes règles, message différent)
+  - `void guardGate();` → annonce Gate keeper mode
+- Chaînage:
+  - Construction: `ClapTrap` puis `ScavTrap`
+  - Destruction: inverse
+
+### Acceptation
+
+- Stats exactes; messages propres; chaînage visible
+- Règles énergie/PV respectées
+
+---
+
+## ex02 — Repetitive work (FragTrap)
+
+### Objectif
+
+- Créer `FragTrap` dérivé de `ClapTrap` avec stats & messages propres
+- Ajouter `highFivesGuys(void)`
+
+### Contraintes
+
+- Fichiers: précédents + `FragTrap.hpp`, `FragTrap.cpp`
+
+### Spécifications
+
+- Stats:
+  - `hit points = 100`
+  - `energy points = 100`
+  - `attack damage = 30`
+  - `name` via constructeur
+- Méthodes:
+  - Redéfinir `attack(...)` (message différent)
+  - `void highFivesGuys(void);` → affiche demande positive
+
+### Acceptation
+
+- Messages de construction/destruction/attaque distincts
+- `highFivesGuys` affiche clairement; chaînage correct
+
+---
+
+## ex03 — Now it’s weird! (DiamondTrap)
+
+### Objectif
+
+- Créer `DiamondTrap` (héritage multiple `FragTrap` + `ScavTrap`)
+- Attribut privé `name` avec même identifiant que dans `ClapTrap`
+- `whoAmI()` affiche son nom et le `ClapTrap::name`
+
+### Contraintes
+
+- Fichiers: précédents + `DiamondTrap.hpp`, `DiamondTrap.cpp`
+
+### Spécifications
+
+- Initialisations:
+  - `DiamondTrap::name` privé (même identifiant que `ClapTrap::name`)
+  - `ClapTrap::name = param + "_clap_name"`
+  - PV: de `FragTrap`
+  - Énergie: de `ScavTrap`
+  - Dégâts: de `FragTrap`
+  - `attack()`: utiliser `ScavTrap::attack`
+- Un seul `ClapTrap`:
+  - Héritage virtuel dans `ScavTrap` et `FragTrap`
+    - `class ScavTrap : virtual public ClapTrap;`
+    - `class FragTrap : virtual public ClapTrap;`
+  - `DiamondTrap` initialise la base virtuelle `ClapTrap`
+
+### Acceptation
+
+- `whoAmI` affiche les deux noms correctement
+- Une seule instance `ClapTrap` observée
+- Statistiques et `attack()` conformes
+- Messages distincts et chaînage correct

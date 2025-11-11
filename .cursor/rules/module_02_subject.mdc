@@ -1,0 +1,140 @@
+---
+alwaysApply: true
+---
+
+---
+
+## alwaysApply: false
+
+# Cursor Rules: Exercises 00–02 — C++ Module 00
+
+## ex00 — Megaphone
+
+### Objective
+
+- Build a program that uppercases and concatenates its arguments; if none, print the exact fallback line.
+
+### Constraints
+
+- Files: `Makefile`, `megaphone.cpp`.
+- Forbidden functions: **None** (but follow module constraints: C++ I/O, C++98).
+- Output must match examples **exactly** (including spaces and newline).
+
+### IO Spec
+
+- Input: command-line arguments (`argv[1..n]`).
+- Behavior:
+  - If at least one argument: for each arg, output its characters transformed to **uppercase**, preserving non-alpha chars, concatenated without extra separators, then newline.
+  - If no arguments: print `* LOUD AND UNBEARABLE FEEDBACK NOISE *` then newline.
+
+### Design Notes
+
+- Use `std::toupper` from `<cctype>` on `unsigned char` cast.
+- Iterate by character; avoid STL containers.
+- No dynamic allocation required.
+
+### Acceptance Criteria
+
+- Matches example outputs byte-for-byte.
+- Handles multiple quoted args and special chars.
+- Compiles with required flags and C++98.
+
+---
+
+## ex01 — My Awesome PhoneBook
+
+### Objective
+
+- Implement `PhoneBook` and `Contact` classes with an interactive CLI supporting `ADD`, `SEARCH`, `EXIT`.
+
+### Constraints
+
+- Files: `Makefile`, `*.cpp`, `*.{h,hpp}`.
+- **No dynamic allocation** for contacts storage.
+- Max **8** contacts; on adding a 9th, **overwrite oldest** (ring buffer behavior).
+- Fields: **first name**, **last name**, **nickname**, **phone number**, **darkest secret**—none can be empty when saved.
+
+### Runtime Commands
+
+- **ADD**:
+  - Prompt sequentially for each field.
+  - Validate non-empty input; if any empty, reject and do not save.
+  - Save into a fixed-size array; advance overwrite index correctly.
+- **SEARCH**:
+  - Render table with columns: index, first name, last name, nickname.
+  - Width **10**, **right-aligned**, separated by `|`.
+  - If a string >10 chars, **truncate** and replace the **last displayable char** with `.` (i.e., show first 9 chars + `.`).
+  - Prompt for index; if invalid/out of range, define safe behavior (e.g., print an error and return to prompt). If valid, print all fields one per line.
+- **EXIT**:
+  - Quit program; contacts are **not persisted**.
+
+### Formatting Rules
+
+- Use `<iomanip>`: `std::setw(10)` and right alignment.
+- Truncation helper: return either the original if `size <= 10`, else `substr(0, 9) + "."`.
+
+### Structure
+
+- `class Contact`:
+  - Private fields for all 5 attributes.
+  - Setters/getters as needed; ensure encapsulation.
+- `class PhoneBook`:
+  - Fixed array `Contact contacts[8];`
+  - Track count (<=8) and a circular **insertion index** for overwrite behavior.
+  - Methods: `addContact(...)`, `list()`, `display(index)`.
+
+### Acceptance Criteria
+
+- Exact table formatting (width, alignment, pipes, truncation).
+- Robust input handling; ignores unknown commands.
+- No heap allocation; passes with C++98 and required flags.
+
+---
+
+## ex02 — The Job Of Your Dreams
+
+### Objective
+
+- Recreate the missing `Account.cpp` so that `tests.cpp` produces output identical to the provided log (timestamps may differ).
+
+### Constraints
+
+- Files: `Makefile`, `Account.cpp`, `Account.hpp`, `tests.cpp`.
+- Forbidden functions: **None** (respect module constraints).
+- Implement **only** what `Account.hpp` declares; match semantics inferred from log and tests.
+
+### Typical Account Interface (per 42 subject tradition)
+
+- Static tracking (class-level):
+  - `_nbAccounts`, `_totalAmount`, `_totalNbDeposits`, `_totalNbWithdrawals`.
+- Per-instance:
+  - `_accountIndex`, `_amount`, `_nbDeposits`, `_nbWithdrawals`.
+- Methods commonly required:
+  - `displayAccountsInfos()` (static): print global stats.
+  - `displayStatus()`: print per-account status.
+  - `makeDeposit(int)`: update amount and counters; print formatted line.
+  - `makeWithdrawal(int)`: allow only if `amount >= withdrawal`; update counters; print formatted line (refuse otherwise).
+  - Constructors and destructor print lines with timestamp + index + amount.
+
+### Output & Timestamp
+
+- Format must match the **log file pattern** (e.g., `[YYYYMMDD_HHMMSS]` prefix). Exact timestamp value can differ but **format must be identical**.
+- Field names, separators, and order must match the log.
+
+### Ordering Note
+
+- Destructor call order may differ by compiler/OS (reverse creation order is typical). Ensure prints occur in destructor to match expectations.
+
+### Acceptance Criteria
+
+- `tests.cpp` compiles and runs.
+- Output matches the provided log **exactly** except timestamp values.
+- All counters and aggregates update correctly across operations.
+
+---
+
+## Common Makefile Notes
+
+- Separate targets per exercise (e.g., `megaphone`, `phonebook`, `accounts`).
+- Use variables: `CXX`, `CXXFLAGS`, `NAME`, `SRCS`, `OBJS`.
+- Enforce flags: `-Wall -Wextra -Werror -std=c++98`.

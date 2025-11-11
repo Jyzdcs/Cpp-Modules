@@ -1,0 +1,253 @@
+---
+alwaysApply: true
+---
+
+```markdown
+# Cursor Rules: Exercises 00–06 — C++ Module 01
+
+## General Module Rules
+
+- **Standard:** Compile with `c++` and flags `-Wall -Wextra -Werror -std=c++98`. No external libraries beyond the C++ standard library (C++11+ and Boost are forbidden). No `printf`, `malloc`/`calloc`/`realloc`/`free`.
+- **Namespaces & Friends:** `using namespace ...` and `friend` are forbidden unless explicitly allowed.
+- **STL:** No containers or algorithms until Modules 08–09.
+- **Headers:** Independent, with include guards; no function implementations in headers (except templates).
+- **Memory:** Avoid leaks; free what you `new`. From Module 02 onward, use Orthodox Canonical Form unless told otherwise.
+- **Outputs:** All messages end with newline and go to stdout.
+- **Formatting:** Clean, readable code; class/file naming in UpperCamelCase.
+
+---
+
+## ex00 — BraiiiiiiinnnzzzZ
+
+### Objective
+
+- Implement a `Zombie` class with a **private** `std::string name` and `void announce(void)` that prints `<name>: BraiiiiiiinnnzzzZ...`.
+
+### Constraints
+
+- **Turn-in:** `Makefile`, `main.cpp`, `Zombie.{h,hpp}`, `Zombie.cpp`, `newZombie.cpp`, `randomChump.cpp`.
+- **Forbidden functions:** None (respect module rules).
+- **Destructor:** Must print a message including the zombie’s name for debugging.
+
+### IO Spec
+
+- **announce:** Writes exactly `Name: BraiiiiiiinnnzzzZ...` then newline.
+
+### Design Notes
+
+- **Factory vs Stack:** Provide:
+  - `Zombie* newZombie(std::string name)`: allocates on heap, returns pointer.
+  - `void randomChump(std::string name)`: creates a zombie and calls `announce()` immediately (stack or temporary).
+- **Lifetime:** Destroy zombies when no longer needed to avoid leaks.
+
+### Acceptance Criteria
+
+- Announce format matches exactly.
+- Demonstrates when to use stack vs heap allocation.
+- Destructor logs on object destruction.
+
+---
+
+## ex01 — Moar brainz!
+
+### Objective
+
+- Implement `Zombie* zombieHorde(int N, std::string name)` that allocates **N zombies in one allocation**, initializes names, and returns a pointer to the first element.
+
+### Constraints
+
+- **Turn-in:** `Makefile`, `main.cpp`, `Zombie.{h,hpp}`, `Zombie.cpp`, `zombieHorde.cpp`.
+- **Forbidden functions:** None.
+
+### IO Spec
+
+- Call `announce()` on each zombie to verify behavior.
+
+### Design Notes
+
+- **Single allocation:** Use `new Zombie[N]`.
+- **Initialization:** Provide a way to set each zombie’s name (constructor or setter).
+- **Deletion:** Use `delete[]` to free the horde. Check for memory leaks.
+
+### Acceptance Criteria
+
+- Proper single allocation and mass initialization.
+- Correct `delete[]` of the array.
+- `announce()` outputs as expected for all zombies.
+
+---
+
+## ex02 — HI THIS IS BRAIN
+
+### Objective
+
+- Write a program defining:
+  - A `std::string` variable initialized to **"HI THIS IS BRAIN"**.
+  - `stringPTR`: a pointer to that string.
+  - `stringREF`: a reference to that string.
+
+### Constraints
+
+- **Turn-in:** `Makefile`, `main.cpp`.
+- **Forbidden functions:** None.
+
+### IO Spec
+
+- Print:
+  - The memory address of the string variable.
+  - The memory address held by `stringPTR`.
+  - The memory address held by `stringREF`.
+- Then print:
+  - The value of the string variable.
+  - The value pointed to by `stringPTR`.
+  - The value referred to by `stringREF`.
+
+### Design Notes
+
+- Demonstrate equivalence/relationship between pointer and reference addressing and dereferencing.
+
+### Acceptance Criteria
+
+- Addresses and values printed correctly and distinctly.
+- Output order and formatting match requirements with newlines.
+
+---
+
+## ex03 — Unnecessary violence
+
+### Objective
+
+- Implement:
+  - **Weapon** class:
+    - Private `std::string type`.
+    - `const std::string& getType() const`.
+    - `void setType(const std::string& newType)`.
+  - **HumanA** and **HumanB** classes:
+    - Each has a name and a weapon, and `void attack()` prints: `<name> attacks with their <weapon type>`.
+
+### Constraints
+
+- **Turn-in:** `Makefile`, `main.cpp`, `Weapon.{h,hpp}`, `Weapon.cpp`, `HumanA.{h,hpp}`, `HumanA.cpp`, `HumanB.{h,hpp}`, `HumanB.cpp`.
+- **Forbidden functions:** None.
+
+### IO Spec
+
+- Given the sample main:
+  - Both test cases print an attack with `"crude spiked club"`.
+  - After `setType("some other type of club")`, both print the new type.
+
+### Design Notes
+
+- **Ownership & Lifetime:**
+  - `HumanA` stores a **reference** to a `Weapon` provided in its constructor (always armed).
+  - `HumanB` may **not** have a weapon initially; set later via setter (pointer member); handle null safely.
+- **Mutability:** `getType()` returns a const reference; changing the weapon’s type reflects in both humans.
+
+### Acceptance Criteria
+
+- Outputs match the described sequence for both `HumanA` and `HumanB`.
+- No leaks; proper handling of `HumanB` with/without weapon.
+- Clear use of reference for `HumanA` and pointer for `HumanB`.
+
+---
+
+## ex04 — Sed is for losers
+
+### Objective
+
+- Create a program: `./replace <filename> <s1> <s2>` that writes `<filename>.replace` by replacing **every occurrence of `s1`** with `s2` in the original file content.
+
+### Constraints
+
+- **Turn-in:** `Makefile`, `main.cpp`, `*.cpp`, `*.{h,hpp}`.
+- **Forbidden:** `std::string::replace`. No C file APIs; use C++ streams.
+
+### IO Spec
+
+- Read the entire file content and produce an output file with all replacements applied.
+
+### Design Notes
+
+- **Safe I/O:** Use `std::ifstream`/`std::ofstream`.
+- **Replace logic:** Implement manual find/replace using `find`, `substr`, and concatenation. Handle edge cases (empty `s1` should be treated carefully to avoid infinite loop).
+- **Errors:** Validate args count, file open failures, and write errors; report appropriately.
+
+### Acceptance Criteria
+
+- Exact content replacement with correct file naming `<filename>.replace`.
+- Robust input handling and error messages.
+- No forbidden APIs used.
+
+---
+
+## ex05 — Harl 2.0
+
+### Objective
+
+- Implement a `Harl` class with private:
+  - `void debug(void)`, `void info(void)`, `void warning(void)`, `void error(void)`.
+- Public:
+  - `void complain(std::string level)` that dispatches to one of the four methods **using pointers to member functions** (no if/else ladders).
+
+### Constraints
+
+- **Turn-in:** `Makefile`, `main.cpp`, `Harl.{h,hpp}`, `Harl.cpp`.
+- **Forbidden functions:** None (but avoid if/else forest).
+
+### IO Spec
+
+- Print messages corresponding to levels; you may use the provided sample texts or your own consistent outputs.
+
+### Design Notes
+
+- **Dispatch table:** Map strings to `void (Harl::*)()` pointers; lookup and invoke.
+- **Case sensitivity:** Define expected level strings exactly (e.g., `"DEBUG"`, `"INFO"`, `"WARNING"`, `"ERROR"`).
+- **Extensibility:** Clean separation of messages from dispatch logic.
+
+### Acceptance Criteria
+
+- Correct pointer-to-member dispatch per level.
+- No if/else chains; table-driven implementation.
+- Demonstrates multiple calls and outputs.
+
+---
+
+## ex06 — Harl filter
+
+### Objective
+
+- Build `harlFilter` that takes one of the four levels and prints **all messages from that level and above**; otherwise prints:
+  - `[ Probably complaining about insignificant problems ]`
+
+### Constraints
+
+- **Turn-in:** `Makefile`, `main.cpp`, `Harl.{h,hpp}`, `Harl.cpp`.
+- **Forbidden functions:** None.
+- **Requirement:** Use a `switch` statement to implement filtering logic.
+
+### IO Spec
+
+- Example:
+  - Input `"WARNING"` prints `[ WARNING ]` messages then `[ ERROR ]` messages.
+  - Unknown input prints the default single line.
+
+### Design Notes
+
+- **Level ranking:** Map `"DEBUG"(0)`, `"INFO"(1)`, `"WARNING"(2)`, `"ERROR"(3)`; switch on the rank to fall-through and print higher severities.
+- **Output format:** Prefix each block with `[ LEVEL ]` then its message(s).
+
+### Acceptance Criteria
+
+- Switch-based control flow with correct fall-through behavior.
+- Outputs match examples for known levels; default message for unknown levels.
+- Clean separation of concerns (parsing, level mapping, printing).
+
+---
+
+## Common Makefile Notes
+
+- **Targets:** One per exercise (e.g., `braiiiiiiinnnzzzZ`, `zombieHorde`, `brain`, `violence`, `replace`, `harl2`, `harlFilter`).
+- **Variables:** Use `CXX`, `CXXFLAGS`, `NAME`, `SRCS`, `OBJS`.
+- **Flags:** `-Wall -Wextra -Werror -std=c++98`.
+- **Rules:** Build, clean, fclean, re; no unnecessary relinking.
+```

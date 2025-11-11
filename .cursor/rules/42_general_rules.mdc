@@ -1,0 +1,64 @@
+---
+globs: */*.cpp
+alwaysApply: false
+---
+
+# Cursor Rules: General Rules — C++ Module 00
+
+## Scope
+
+- Target: **C++98** only.
+- Module focus: **namespaces**, **classes**, **member functions**, **stdio streams**, **initialization lists**, **static**, **const**.
+
+## Build & Tooling
+
+- Compiler: `c++`.
+- Required flags: `-Wall -Wextra -Werror`.
+- Must also compile with: `-std=c++98`.
+- Provide a **Makefile** with standard targets: `all`, `clean`, `fclean`, `re`, and per-exercise binaries.
+
+## Language & Library Constraints
+
+- **Allowed:** standard library (C++98).
+- **Forbidden:** external libraries, **C++11+**, **Boost**.
+- **STL usage banned until Modules 08/09:** no containers (`vector`, `list`, `map`, etc.) and no `<algorithm>`-based algorithms.
+- **Forbidden identifiers:** `using namespace <ns_name>` and `friend` unless explicitly allowed.
+- **Forbidden functions:** any `*printf()`, `*alloc()`, and `free()` (use iostreams and RAII/C++ constructs).
+
+## Output & IO
+
+- All output must end with a **newline** and go to **stdout** unless specified otherwise.
+- Prefer `std::cout`, `std::cerr`, `std::cin`. Do not rely on C I/O.
+
+## Naming & Structure
+
+- Exercises directories: `ex00/`, `ex01/`, `ex02/`, …
+- Class names: **UpperCamelCase**.
+- File naming for classes: `ClassName.hpp`/`.h`, `ClassName.cpp`, optional `ClassName.tpp`.
+- Executables should have **relevant names** per exercise instructions.
+
+## Headers & Includes
+
+- Each header must be **independently usable**:
+  - Include all required dependencies.
+  - Add **include guards** or `#pragma once` (guards preferred for C++98).
+- **Do not implement non-template functions in headers**.
+
+## Design Requirements
+
+- Avoid **memory leaks** (pair every `new` with `delete`, prefer stack allocation when allowed).
+- From Module 02 onward, implement classes in the **Orthodox Canonical Form** (default ctor, copy ctor, copy assignment, dtor).
+- Keep interfaces **public** only when accessed from outside; internal details **private**.
+
+## Style & Readability
+
+- No enforced style guide, but prioritize **clean and readable code** that peers can grade.
+- Document assumptions briefly in comments where behavior is unspecified.
+
+## AI Usage (meta)
+
+- Use AI for **reasoning support**, not for direct answers or blind copy. Ensure you can explain all code during peer evaluation.
+
+## Evaluation Readiness
+
+- Be prepared for **minor modifications** during defense: small changes to behavior, adding a field, tweaking a function—should be doable within minutes.
