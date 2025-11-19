@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   phonebook.cpp                                      :+:      :+:    :+:   */
+/*   PhoneBook.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kclaudan <kclaudan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 14:56:55 by kclaudan          #+#    #+#             */
-/*   Updated: 2025/11/13 17:53:02 by kclaudan         ###   ########.fr       */
+/*   Updated: 2025/11/19 12:54:38 by kclaudan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PhoneBook.hpp"
 	
-PhoneBook::PhoneBook() : _count(0), _insertIndex(0) {}
+PhoneBook::PhoneBook() : _insertIndex(0) {}
 
 void	PhoneBook::addContact(std::string firstName, std::string lastName, std::string nickName, std::string phoneNumber, std::string darkestSecret)
 {
-	if (_insertIndex == 2)
+	if (_insertIndex == 8)
 		_insertIndex = 0;
 	_contacts[_insertIndex].setContact(firstName, lastName, nickName, phoneNumber, darkestSecret);
-	if (_insertIndex < 2)
+	if (_insertIndex < 8)
 		_insertIndex++;
 }
 
@@ -39,18 +39,18 @@ void	PhoneBook::printContacts() {
 				<< "|" << std::setw(10) << "Last Name"
 				<< "|" << std::setw(10) << "Nick Name"
 				<< "|\n" << separator;
-	for (int id = 0; _contacts[id].isContactExist() and id < 2; id++)
+	for (int id = 0; _contacts[id].isContactExist() and id < 8; id++)
 	{
-		std::string firstname = _contacts[id].getFirstName();
-		truncateAndReplace(firstname);
-		std::string lastname = _contacts[id].getLastName();
-		truncateAndReplace(lastname);
-		std::string nickname = _contacts[id].getNickName();
-		truncateAndReplace(nickname);
+		std::string firstName = _contacts[id].getFirstName();
+		truncateAndReplace(firstName);
+		std::string lastName = _contacts[id].getLastName();
+		truncateAndReplace(lastName);
+		std::string nickName = _contacts[id].getNickName();
+		truncateAndReplace(nickName);
 		std::cout << "|" << std::setw(10) << id
-							<< "|" << std::setw(10) << firstname
-							<< "|" << std::setw(10) << lastname
-							<< "|" << std::setw(10) << nickname
+							<< "|" << std::setw(10) << firstName
+							<< "|" << std::setw(10) << lastName
+							<< "|" << std::setw(10) << nickName
 							<< "|" << std::endl;
 		std::cout << separator;
 	}
@@ -61,25 +61,31 @@ void	PhoneBook::printContactById(int id) {
 		std::cout << "Index out of range !\n";
 	else
 	{
-		std::string separator = "+----------+----------+----------+----------+\n";
+		std::string separator = "+----------+----------+----------+----------+----------+\n";
 		std::cout << separator
 					<< std::right
-					<< "|" << std::setw(10) << "Index"
 					<< "|" << std::setw(10) << "First Name"
 					<< "|" << std::setw(10) << "Last Name"
 					<< "|" << std::setw(10) << "Nick Name"
+					<< "|" << std::setw(10) << "Phone"
+					<< "|" << std::setw(10) << "Secret"
 					<< "|\n" << separator;
 		if (_contacts[id].isContactExist()){
-			std::string firstname = _contacts[id].getFirstName();
-			truncateAndReplace(firstname);
-			std::string lastname = _contacts[id].getLastName();
-			truncateAndReplace(lastname);
-			std::string nickname = _contacts[id].getNickName();
-			truncateAndReplace(nickname);
-			std::cout << "|" << std::setw(10) << id
-								<< "|" << std::setw(10) << firstname
-								<< "|" << std::setw(10) << lastname
-								<< "|" << std::setw(10) << nickname
+			std::string firstName = _contacts[id].getFirstName();
+			truncateAndReplace(firstName);
+			std::string lastName = _contacts[id].getLastName();
+			truncateAndReplace(lastName);
+			std::string nickName = _contacts[id].getNickName();
+			truncateAndReplace(nickName);
+			std::string phoneNumber = _contacts[id].getPhoneNumber();
+			truncateAndReplace(phoneNumber);
+			std::string darkestSecret = _contacts[id].getDarkestSecret();
+			truncateAndReplace(darkestSecret);
+			std::cout << "|" << std::setw(10) << firstName
+								<< "|" << std::setw(10) << lastName
+								<< "|" << std::setw(10) << nickName
+								<< "|" << std::setw(10) << phoneNumber
+								<< "|" << std::setw(10) << darkestSecret
 								<< "|" << std::endl;
 			}
 		std::cout << separator;

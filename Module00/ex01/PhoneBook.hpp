@@ -6,7 +6,7 @@
 /*   By: kclaudan <kclaudan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 13:40:10 by kclaudan          #+#    #+#             */
-/*   Updated: 2025/11/13 16:52:12 by kclaudan         ###   ########.fr       */
+/*   Updated: 2025/11/19 11:58:03 by kclaudan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 class PhoneBook {
 	private:
 		Contact	_contacts[8];
-		int			_count;
 		int			_insertIndex;
 	
 	public:

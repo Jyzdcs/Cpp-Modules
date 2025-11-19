@@ -10,58 +10,58 @@
 void	add_contact(std::string &firstName, std::string &lastName, std::string &nickName, std::string &phoneNumber, std::string &secret)
 {
 	while (firstName.empty())
-			{
-				std::cout << "Entrez votre firstName: ";
-				std::getline(std::cin, firstName);
-				if (firstName.empty()) {
-					std::system("clear");
-					sleep(1);
-					std::cout << "Le champs doit etre rempli !\n";
-				}
-			}
-			while (lastName.empty())
-			{
-				std::cout << "Entrez votre lastName: ";
-				std::getline(std::cin, lastName);
-				if (lastName.empty()) {
-					std::system("clear");
-					sleep(1);
-					std::cout << "Le champs doit etre rempli !\n";
-				}
-			}
-			while (nickName.empty())
-			{
-				std::cout << "Entrez votre nickName: ";
-				std::getline(std::cin, nickName);
-				if (nickName.empty()) {
-					std::system("clear");
-					sleep(1);
-					std::cout << "Le champs doit etre rempli !\n";
-				}
-			}
-			while (phoneNumber.empty())
-			{
-				std::cout << "Entrez votre phoneNumber: ";
-				std::getline(std::cin, phoneNumber);
-				if (phoneNumber.empty()) {
-					std::system("clear");
-					sleep(1);
-					std::cout << "Le champs doit etre rempli !\n";
-				}
-				else {
+	{
+		std::cout << "Entrez votre firstName: ";
+		std::getline(std::cin, firstName);
+		if (firstName.empty()) {
+			std::system("clear");
+			sleep(1);
+			std::cout << "Le champs doit etre rempli !\n";
+		}
+	}
+	while (lastName.empty())
+	{
+		std::cout << "Entrez votre lastName: ";
+		std::getline(std::cin, lastName);
+		if (lastName.empty()) {
+			std::system("clear");
+			sleep(1);
+			std::cout << "Le champs doit etre rempli !\n";
+		}
+	}
+	while (nickName.empty())
+	{
+		std::cout << "Entrez votre nickName: ";
+		std::getline(std::cin, nickName);
+		if (nickName.empty()) {
+			std::system("clear");
+			sleep(1);
+			std::cout << "Le champs doit etre rempli !\n";
+		}
+	}
+	while (phoneNumber.empty())
+	{
+		std::cout << "Entrez votre phoneNumber: ";
+		std::getline(std::cin, phoneNumber);
+		if (phoneNumber.empty()) {
+			std::system("clear");
+			sleep(1);
+			std::cout << "Le champs doit etre rempli !\n";
+		}
+		else {
 
-				}
-			}
-			while (secret.empty())
-			{
-				std::cout << "Entrez votre secret: ";
-				std::getline(std::cin, secret);
-				if (secret.empty()) {
-					std::system("clear");
-					sleep(1);
-					std::cout << "Le champs doit etre rempli !\n";
-				}
-			}
+		}
+	}
+	while (secret.empty())
+	{
+		std::cout << "Entrez votre secret: ";
+		std::getline(std::cin, secret);
+		if (secret.empty()) {
+			std::system("clear");
+			sleep(1);
+			std::cout << "Le champs doit etre rempli !\n";
+		}
+	}
 }
 
 int main(void)
@@ -72,7 +72,7 @@ int main(void)
 	std::string	phoneNumber;
 	std::string	secret;
 	std::string	input;
-	int					index;
+	int			index;
 	PhoneBook	phoneBook;
 
 	while (input != "EXIT")
@@ -85,6 +85,12 @@ int main(void)
 		{
 			add_contact(firstName, lastName, nickName, phoneNumber, secret);
 			phoneBook.addContact(firstName, lastName, nickName, phoneNumber, secret);
+			firstName = "";
+			lastName = "";
+			nickName = "";
+			phoneNumber = "";
+			secret = "";
+
 		}
 		else if (input == "SEARCH")
 		{
