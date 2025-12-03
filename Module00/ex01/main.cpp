@@ -66,11 +66,6 @@ void	add_contact(std::string &firstName, std::string &lastName, std::string &nic
 
 int main(void)
 {
-	std::string	firstName;
-	std::string	lastName;
-	std::string	nickName;
-	std::string	phoneNumber;
-	std::string	secret;
 	std::string	input;
 	int			index;
 	PhoneBook	phoneBook;
@@ -83,6 +78,12 @@ int main(void)
 
 		if (input == "ADD")
 		{
+			std::string	firstName;
+			std::string	lastName;
+			std::string	nickName;
+			std::string	phoneNumber;
+			std::string	secret;
+		
 			add_contact(firstName, lastName, nickName, phoneNumber, secret);
 			phoneBook.addContact(firstName, lastName, nickName, phoneNumber, secret);
 			firstName = "";
