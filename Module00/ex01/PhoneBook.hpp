@@ -6,16 +6,16 @@
 /*   By: kclaudan <kclaudan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 13:40:10 by kclaudan          #+#    #+#             */
-/*   Updated: 2025/11/19 11:58:03 by kclaudan         ###   ########.fr       */
+/*   Updated: 2025/12/03 11:58:28 by kclaudan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef	PHONEBOOK_HPP
 # define	PHONEBOOK_HPP
 
-#include "Contact.hpp"  // Inclut automatiquement Contact.hpp
-#include <iostream>        // Pour std::cout
-#include <iomanip>         // Pour std::setw
+#include "Contact.hpp"
+#include <iostream>
+#include <iomanip>
 
 class PhoneBook {
 	private:
