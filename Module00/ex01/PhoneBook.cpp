@@ -6,7 +6,7 @@
 /*   By: kclaudan <kclaudan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 14:56:55 by kclaudan          #+#    #+#             */
-/*   Updated: 2025/12/03 11:35:45 by kclaudan         ###   ########.fr       */
+/*   Updated: 2025/12/03 11:52:55 by kclaudan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,14 @@ void	PhoneBook::printContactById(int id) {
 			truncateAndReplace(lastName);
 			std::string nickName = _contacts[id].getNickName();
 			truncateAndReplace(nickName);
+			std::string phoneNumber = _contacts[id].getPhoneNumber();
+			truncateAndReplace(phoneNumber);
 			std::string darkestSecret = _contacts[id].getDarkestSecret();
 			truncateAndReplace(darkestSecret);
-			std::cout << "|" << std::setw(10) << id
-								<< "|" << std::setw(10) << firstName
+			std::cout << "|" << std::setw(10) << firstName
 								<< "|" << std::setw(10) << lastName
 								<< "|" << std::setw(10) << nickName
+								<< "|" << std::setw(10) << phoneNumber
 								<< "|" << std::setw(10) << darkestSecret
 								<< "|" << std::endl;
 			}
