@@ -1,7 +1,7 @@
 #ifndef HUMANA_H
 #define HUMANA_H
-#	include <iostream>
-# include "Weapon.h"
+#include <string>
+#include "Weapon.h"
 
 class HumanA {
 	private:
