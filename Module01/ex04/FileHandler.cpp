@@ -1,14 +1,12 @@
 #include "FileHandler.hpp"
 
-FileHandler::FileHandler() {};
 FileHandler::FileHandler(std::string newFileName) : _outputFileName(newFileName) {};
 
-bool	FileHandler::exportFileContent() {
+void	FileHandler::exportFileContent() {
 	std::ofstream outfile(_outputFileName.c_str());
 
 	if (!outfile.is_open()) {
 		std::cerr << "Error: cannont create file\n";
-		return false;
 	}
 
 	outfile << _outputFileContent;
@@ -16,7 +14,7 @@ bool	FileHandler::exportFileContent() {
 	outfile.close();
 };
 
-bool	FileHandler::replaceOccurence() {
+void	FileHandler::replaceOccurence() {
 	size_t subPos = 0;
 	size_t pos = 0;
 
@@ -29,11 +27,10 @@ bool	FileHandler::replaceOccurence() {
 		pos = subPos + _occurence.length();
 	}
 	_outputFileContent.append(_fileContent, pos, std::string::npos);
-	return (true);
 };
 
 bool	FileHandler::setFileContent(std::string path) {
-	std::ifstream file(path);
+	std::ifstream file(path.c_str());
 	if (!file.is_open()) {
 		std::cerr << "Error: cannont open file\n";
 		return (false);

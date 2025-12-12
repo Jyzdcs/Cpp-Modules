@@ -15,9 +15,8 @@ class FileHandler {
 	public:
 		FileHandler(std::string newFileName);
 
-		bool	exportFileContent();
-
-		bool	replaceOccurence();
+		void	exportFileContent();
+		void	replaceOccurence();
 
 		void	setOccurence(std::string occurence);
 		void	setReplaceStr(std::string path);
