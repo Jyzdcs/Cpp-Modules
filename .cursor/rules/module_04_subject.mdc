@@ -1,0 +1,156 @@
+---
+alwaysApply: false
+---
+
+# SCOPE: Cursor Rules — C++ Module 04 (Exercises 00–03)
+
+## General Module Rules
+
+- Standard: Compile with `c++` and flags `-Wall -Wextra -Werror -std=c++98`. No external libraries beyond the C++ standard library. No `printf`, `malloc`/`calloc`/`realloc`/`free`.
+- Namespaces & Friends: `using namespace ...` and `friend` are forbidden unless explicitly allowed.
+- STL: No containers or algorithms until Modules 08–09.
+- Headers: Independent, with include guards; no function implementations in headers (except templates).
+- Memory: Avoid leaks; free what you `new`. Use Orthodox Canonical Form (OCF) across classes unless told otherwise.
+- Outputs: All messages end with newline and go to stdout.
+- Formatting: Clean, readable code; class/file naming in UpperCamelCase.
+
+---
+
+## ex00 — Polymorphism
+
+### Objective
+
+- Implement base class `Animal` with protected `std::string type` and suitable interface.
+- Implement derived classes `Dog` and `Cat` that set `type` to `"Dog"` / `"Cat"` and override `makeSound()` with appropriate outputs.
+
+### Constraints
+
+- Turn-in: `ex00/` with `Makefile`, `main.cpp`, `*.cpp`, `*.{h,hpp}`.
+- Forbidden functions: None.
+- Constructors/Destructors: Each class prints specific, distinct messages on construction/destruction.
+
+### IO Spec
+
+- `getType()` returns type; `makeSound()` prints the class-specific sound.
+- Polymorphic behavior: Calls through `const Animal*` must dispatch to derived overrides.
+
+### Design Notes
+
+- Virtuals: `makeSound()` must be `virtual` in `Animal` to enable subtype polymorphism.
+- Wrong hierarchy: Provide `WrongAnimal` and `WrongCat` where `makeSound()` is NOT virtual to demonstrate incorrect behavior (calling base sound when using base pointers).
+
+### Acceptance Criteria
+
+- `Dog`/`Cat` types are correctly initialized; `makeSound()` outputs match species.
+- Demonstrate correct polymorphism and incorrect behavior with `WrongAnimal`/`WrongCat`.
+- Distinct ctor/dtor logs per class; no leaks.
+
+---
+
+## ex01 — I don’t want to set the world on fire
+
+### Objective
+
+- Implement `Brain` class holding `std::string ideas[100]`.
+- `Dog` and `Cat` own a private `Brain*`:
+  - Allocate with `new Brain()` in constructors.
+  - Delete in destructors.
+
+### Constraints
+
+- Turn-in: Files from ex00 + `*.cpp`, `*.{h,hpp}` in `ex01/`.
+- Forbidden functions: None.
+- Constructors/Destructors: Specific messages per class.
+
+### IO Spec
+
+- In `main`, create an array of `Animal*` with half `Dog` and half `Cat`. Delete via `Animal*` base pointers and ensure correct destructor chaining and no leaks.
+
+### Design Notes
+
+- Deep copy: Copies of `Dog`/`Cat` must be deep (copy underlying `Brain` content). Implement OCF (default ctor, dtor, copy ctor, copy assignment).
+- Memory hygiene: Verify with valgrind or equivalent; no shallow copy.
+
+### Acceptance Criteria
+
+- Proper ownership (allocate/free `Brain`).
+- Deleting via `Animal*` triggers derived destructors.
+- Deep copies verified (ideas copied; distinct memory).
+- No leaks.
+
+---
+
+## ex02 — Abstract class
+
+### Objective
+
+- Make `Animal` abstract (non-instantiable) since base animals make no meaningful sound.
+
+### Constraints
+
+- Turn-in: Files from previous exercise + `*.cpp`, `*.{h,hpp}` in `ex02/`.
+- Forbidden functions: None.
+
+### IO Spec
+
+- Existing tests continue to work using derived classes. Instantiating `Animal` must be impossible.
+
+### Design Notes
+
+- Abstractification: Declare at least one pure virtual, e.g. `virtual void makeSound() const = 0;`.
+- Optional: Rename to `AAnimal` while preserving behavior.
+
+### Acceptance Criteria
+
+- `Animal` (or `AAnimal`) is abstract; cannot be constructed.
+- Derived classes implement required pure virtuals.
+- Prior polymorphism tests still pass.
+
+---
+
+## ex03 — Interface & recap
+
+### Objective
+
+- Implement Materia system with interfaces via pure abstract classes:
+  - `AMateria` (abstract base with `clone()` and `use(ICharacter&)`).
+  - Concrete `Ice` and `Cure` (`type` set to `"ice"` / `"cure"`, proper `use` output).
+  - `ICharacter` interface and concrete `Character` with 4-slot inventory.
+  - `IMateriaSource` interface and concrete `MateriaSource` that can learn up to 4 templates and create Materias by type.
+
+### Constraints
+
+- Turn-in: `ex03/` with `Makefile`, `main.cpp`, `*.cpp`, `*.{h,hpp}`.
+- Forbidden functions: None.
+
+### IO Spec
+
+- `Ice::use`: prints `* shoots an ice bolt at <name> *`.
+- `Cure::use`: prints `* heals <name>'s wounds *`.
+- Inventory: `Character` equips into first empty slot (0→3). Using/unequipping invalid slots does nothing. `unequip()` must NOT delete the Materia.
+- `MateriaSource::learnMateria` stores a copy (template). `createMateria(type)` returns a new cloned instance or `0` if unknown.
+
+### Design Notes
+
+- Cloning: `AMateria::clone()` returns `new` of same concrete type; copying only the type is insufficient—use actual cloning for behavior.
+- Deep copies:
+  - `Character` copy ctor/assign must deep copy inventory: delete old Materias before cloning and storing new ones.
+  - Ensure destructor deletes owned Materias in inventory.
+- Floor handling: Track unequipped Materia pointers externally to avoid leaks.
+- Extensibility: Inventory supports any `AMateria` type.
+
+### Acceptance Criteria
+
+- Correct outputs for provided main (order and formatting).
+- Equip/unequip/use adhere to rules; unequip doesn’t delete.
+- `MateriaSource` learns up to 4 and can create by type; returns `0` for unknown.
+- Deep-copy semantics for `Character`; proper deletion on destruction; no leaks.
+
+---
+
+## Common Makefile Notes
+
+- Targets: One per exercise (`polymorphism`, `world_on_fire`, `abstract_animal`, `materia`).
+- Variables: Use `CXX`, `CXXFLAGS`, `NAME`, `SRCS`, `OBJS`.
+- Flags: `-Wall -Wextra -Werror -std=c++98`.
+- Rules: `all`, build target, `clean`, `fclean`, `re`; avoid unnecessary relinking.
