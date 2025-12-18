@@ -1,5 +1,27 @@
 # ex00 — Notes Essentielles (20%)
 
+## 📑 Table des Matières
+
+- [🎯 Objectif de l'exercice](#-objectif-de-lexercice)
+- [📋 Les 4 Membres de l'OCF](#-les-4-membres-de-locf)
+- [🔧 Implémentation Fixed](#-implémentation-fixed)
+- [🏗️ Constructeurs](#️-constructeurs)
+  - [1. Constructeur par défaut](#1-constructeur-par-défaut)
+  - [2. Constructeur de copie](#2-constructeur-de-copie)
+  - [3. Opérateur d'affectation](#3-opérateur-daffectation)
+  - [4. Destructeur](#4-destructeur)
+- [🔑 Concepts Clés](#-concepts-clés)
+  - [`this` en C++](#this-en-c)
+  - [Membres `static`](#membres-static)
+  - [Fixed-Point : Raw vs Interprété](#fixed-point--raw-vs-interprété)
+- [💡 Points de Confusion Courants](#-points-de-confusion-courants)
+- [🎨 Visualisation : `b = a`](#-visualisation--b--a)
+- [📝 Checklist Rapide](#-checklist-rapide)
+- [🔗 Ressources](#-ressources)
+- [🚀 Pour la suite](#-pour-la-suite)
+
+---
+
 ## 🎯 Objectif de l'exercice
 
 **Apprendre l'Orthodox Canonical Form (OCF) et observer le cycle de vie des objets.**
@@ -10,12 +32,12 @@ Ce n'est PAS un exercice technique (un int simple marcherait sans OCF), c'est un
 
 ## 📋 Les 4 Membres de l'OCF
 
-| Membre | Rôle | Quand appelé |
-|--------|------|--------------|
-| **Constructeur par défaut** | Créer instance vide | `Fixed a;` |
-| **Constructeur de copie** | Créer NOUVELLE instance depuis existante | `Fixed b = a;` ou `Fixed b(a);` |
-| **Opérateur d'affectation** | REMPLACER contenu d'instance existante | `b = a;` (b existe déjà) |
-| **Destructeur** | Nettoyer avant destruction | Sortie de scope |
+| Membre                      | Rôle                                     | Quand appelé                    |
+| --------------------------- | ---------------------------------------- | ------------------------------- |
+| **Constructeur par défaut** | Créer instance vide                      | `Fixed a;`                      |
+| **Constructeur de copie**   | Créer NOUVELLE instance depuis existante | `Fixed b = a;` ou `Fixed b(a);` |
+| **Opérateur d'affectation** | REMPLACER contenu d'instance existante   | `b = a;` (b existe déjà)        |
+| **Destructeur**             | Nettoyer avant destruction               | Sortie de scope                 |
 
 ### ⚠️ Différence clé : Copie vs Affectation
 
@@ -44,6 +66,7 @@ private:
 ```
 
 **Pourquoi `_fractionalBits` est `static` ?**
+
 - Appartient à la CLASSE (partagé par toutes les instances)
 - Existe AVANT toute instance
 - Ne peut PAS être dans l'initializer list du constructeur
@@ -61,6 +84,7 @@ Fixed::Fixed() : _fixedPoint(0) {
 ```
 
 **Initializer list (`: _fixedPoint(0)`) est MEILLEUR que corps** :
+
 - Initialise directement (pas construction + affectation)
 - Obligatoire pour `const` membres et références
 - Convention C++98/42
@@ -76,6 +100,7 @@ Fixed::Fixed(Fixed const& src) : _fixedPoint(src._fixedPoint) {
 ```
 
 **Pourquoi `const&` ?**
+
 - **`&`** (référence) : évite copie infinie (sans référence → récursion)
 - **`const`** : protection (ne modifie pas la source) + accepte objets const/temporaires
 
@@ -88,27 +113,30 @@ Fixed::Fixed(Fixed const& src) : _fixedPoint(src._fixedPoint) {
 ```cpp
 Fixed& Fixed::operator=(Fixed const& rhs) {
     std::cout << "Copy assignment operator called\n";
-    
+
     if (this != &rhs) {                      // Protection auto-affectation
         this->_fixedPoint = rhs._fixedPoint; // Copie la valeur
     }
-    
+
     return *this;                            // Permet chaînage (a = b = c)
 }
 ```
 
 **Décortiqué :**
+
 - **`rhs`** (Right-Hand Side) = l'objet à droite de `=` dans `b = a` (a est le rhs)
 - **`this`** = pointeur vers objet courant (celui qui reçoit)
 - **`*this`** = l'objet lui-même (déréférencement)
 - **`return *this`** = retourne l'objet pour permettre `a = b = c`
 
 **Protection `if (this != &rhs)` :**
+
 - Détecte auto-affectation (`a = a`)
 - Critique pour classes avec pointeurs (évite double-free)
 - Discipline pour Fixed (même si pas nécessaire techniquement)
 
 **Pourquoi "rhs" ?**
+
 - Décrit le RÔLE (position dans `a = b`), pas la NATURE de Fixed
 - Convention C++ universelle pour opérateurs binaires
 - Tom Hanks (identité) vs Le héros (rôle dans le film)
@@ -143,6 +171,7 @@ void setValue(int val) {
 ```
 
 **Quand `this` est OBLIGATOIRE :**
+
 1. `return *this` (retourner l'objet)
 2. `if (this != &rhs)` (comparaison d'adresses)
 3. Conflit de noms (paramètre = membre)
@@ -161,6 +190,7 @@ class Fixed {
 ```
 
 **Pourquoi pas dans l'initializer list ?**
+
 - Le constructeur crée des INSTANCES
 - `static` existe AVANT toute instance
 - Exception C++98 : `static const int` peut être initialisé dans le header
@@ -199,6 +229,7 @@ std::cout << "Message\n";             // Juste newline (rapide)
 ### 2. Pourquoi l'OCF pour un simple `int` ?
 
 **Raisons :**
+
 1. **Pédagogie** : Observer quand chaque fonction est appelée
 2. **Discipline** : Réflexe à acquérir (Rule of Three)
 3. **Préparation** : ex01-ex03 construisent sur ces bases
@@ -212,6 +243,7 @@ Sans les messages de debug, tu ne verrais PAS le cycle de vie des objets !
 Pour Fixed (int simple), `if (this != &rhs)` n'est pas critique.
 
 **Mais pour une classe avec pointeurs :**
+
 ```cpp
 String& operator=(String const& rhs) {
     delete[] _data;              // ⚠️ Détruit mes données
@@ -255,6 +287,7 @@ return *this;  // Retourne b (pour chaînage)
 ## 📝 Checklist Rapide
 
 **Avant de compiler :**
+
 - [ ] Les 4 membres OCF définis ?
 - [ ] Initializer list pour constructeurs ?
 - [ ] `const&` sur paramètres constructeur copie / operator= ?
@@ -268,6 +301,7 @@ return *this;  // Retourne b (pour chaînage)
 ## 🔗 Ressources
 
 **Convention de nommage :**
+
 - `src` pour constructeur de copie (source de la copie)
 - `rhs` pour opérateurs (Right-Hand Side de l'opération)
 - `this` pour l'objet courant (toujours implicite)
@@ -280,9 +314,7 @@ Si tu définis UN parmi (destructeur, copy constructor, operator=), définis LES
 ## 🚀 Pour la suite
 
 **ex01 :** Ajoute constructeurs `int`/`float` et conversions  
-**ex02 :** Surcharge d'opérateurs (+, -, *, /, ==, etc.)  
+**ex02 :** Surcharge d'opérateurs (+, -, \*, /, ==, etc.)  
 **ex03 :** Point avec membres `const` (plus complexe)
 
 L'OCF reste la BASE, tu construis dessus ! 💪
-
-

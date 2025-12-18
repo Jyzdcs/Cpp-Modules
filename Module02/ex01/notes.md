@@ -1,10 +1,31 @@
 # ex01 — Notes Essentielles (20%)
 
+## 📑 Table des Matières
+
+- [🎯 Objectif de l'exercice](#-objectif-de-lexercice)
+- [🔢 C'est quoi un Fixed-Point ?](#-cest-quoi-un-fixed-point-)
+- [🔄 Les 4 Conversions Essentielles](#-les-4-conversions-essentielles)
+- [🎨 Décalage vs Multiplication : Équivalence](#-décalage-vs-multiplication--équivalence)
+- [💬 Surcharge d'opérateur : `operator<<`](#-surcharge-dopérateur--operator)
+- [🔓 Le déclic : Le mot-clé `operator`](#-le-déclic--le-mot-clé-operator)
+- [⚠️ Réflexion critique : Quand (ne pas) surcharger](#️-réflexion-critique--quand-ne-pas-surcharger)
+- [📊 Tableau de valeurs (exemples)](#-tableau-de-valeurs-exemples)
+- [🧪 Sortie attendue (main fourni)](#-sortie-attendue-main-fourni)
+- [🔑 Concepts Clés](#-concepts-clés)
+- [📝 Checklist Complète](#-checklist-complète)
+- [💡 Pièges Courants](#-pièges-courants)
+- [🧮 Mini-exercices de compréhension](#-mini-exercices-de-compréhension)
+- [🚀 Pour la suite (ex02)](#-pour-la-suite-ex02)
+- [🎓 Récap Final (en 30 secondes)](#-récap-final-en-30-secondes)
+
+---
+
 ## 🎯 Objectif de l'exercice
 
 **Comprendre les nombres à virgule fixe (fixed-point) et créer un type numérique utile avec conversions et affichage.**
 
 Ce n'est plus juste de l'OCF — c'est maintenant un **vrai type numérique** qui peut :
+
 1. Être créé depuis `int` et `float`
 2. Être converti vers `int` et `float`
 3. S'afficher naturellement avec `std::cout`
@@ -19,11 +40,11 @@ Ce n'est plus juste de l'OCF — c'est maintenant un **vrai type numérique** qu
 
 ### Pourquoi faire ça ?
 
-| Type | Avantages | Inconvénients |
-|------|-----------|---------------|
-| `float` | Grandes plages, facile | Imprécis, lent, complexe |
-| `int` | Rapide, précis | Pas de décimales ❌ |
-| **Fixed-point** | Rapide + décimales ✅ | Plage limitée |
+| Type            | Avantages              | Inconvénients            |
+| --------------- | ---------------------- | ------------------------ |
+| `float`         | Grandes plages, facile | Imprécis, lent, complexe |
+| `int`           | Rapide, précis         | Pas de décimales ❌      |
+| **Fixed-point** | Rapide + décimales ✅  | Plage limitée            |
 
 ### Exemple concret : stocker 42.75
 
@@ -54,12 +75,12 @@ Pour récupérer :
 
 ### Tableau récapitulatif
 
-| De → Vers | Formule | Opérateur | Pourquoi |
-|-----------|---------|-----------|----------|
-| `int` → Fixed | `value << 8` | Décalage | Multiplier par 256 |
-| `float` → Fixed | `roundf(value * 256)` | Multiplication | Float ne supporte pas `<<` |
-| Fixed → `int` | `_fixedPoint >> 8` | Décalage | Diviser par 256 (partie entière) |
-| Fixed → `float` | `_fixedPoint / 256.0f` | Division | Obtenir valeur décimale |
+| De → Vers       | Formule                | Opérateur      | Pourquoi                         |
+| --------------- | ---------------------- | -------------- | -------------------------------- |
+| `int` → Fixed   | `value << 8`           | Décalage       | Multiplier par 256               |
+| `float` → Fixed | `roundf(value * 256)`  | Multiplication | Float ne supporte pas `<<`       |
+| Fixed → `int`   | `_fixedPoint >> 8`     | Décalage       | Diviser par 256 (partie entière) |
+| Fixed → `float` | `_fixedPoint / 256.0f` | Division       | Obtenir valeur décimale          |
 
 ### 1. Constructeur depuis `int`
 
@@ -68,6 +89,7 @@ Fixed::Fixed(int const value) : _fixedPoint(value << 8) {}
 ```
 
 **Exemple :**
+
 ```
 int = 42
 42 << 8 = 10752
@@ -75,6 +97,7 @@ _fixedPoint = 10752
 ```
 
 **Question :** Pourquoi `<< 8` et pas `* 256` ?
+
 - **Réponse :** Les deux sont équivalents pour les entiers !
 - `<< 8` est plus idiomatique (montre que c'est du bit manipulation)
 - `<< n` = multiplier par 2^n
@@ -86,6 +109,7 @@ Fixed::Fixed(float const value) : _fixedPoint(roundf(value * 256)) {}
 ```
 
 **Exemple :**
+
 ```
 float = 42.75
 42.75 × 256 = 10944.0
@@ -96,6 +120,7 @@ _fixedPoint = 10944
 **⚠️ ATTENTION :** On **DOIT** utiliser `* 256`, car les floats ne supportent **PAS** l'opérateur `<<` (bitwise operations uniquement sur entiers).
 
 **Pourquoi `roundf()` ?**
+
 - Sans arrondi : `42.75 × 256 = 10944.0` → casting en `int` = 10944 ✅
 - Avec valeurs négatives ou imprécisions : `roundf()` garantit l'arrondi correct
 - Requis par le sujet : `#include <cmath>`
@@ -109,6 +134,7 @@ int Fixed::toInt() const {
 ```
 
 **Exemple :**
+
 ```
 _fixedPoint = 10944
 10944 >> 8 = 42
@@ -126,6 +152,7 @@ float Fixed::toFloat() const {
 ```
 
 **Exemple :**
+
 ```
 _fixedPoint = 10944
 10944 / 256.0f = 42.75
@@ -187,6 +214,7 @@ std::cout << a.toFloat(); // ✅ Marche mais lourd et pas intuitif
 ### La solution : surcharger `operator<<`
 
 **Instruction du sujet :**
+
 > "An overload of the insertion («) operator that inserts a floating-point representation of the fixed-point number into the output stream object."
 
 **Traduction :** On définit comment afficher notre objet `Fixed` dans un flux de sortie.
@@ -229,12 +257,14 @@ std::ostream& operator<<(std::ostream& os, Fixed const& fixed)
 **Pourquoi fonction non-membre ?**
 
 Si c'était une méthode de `Fixed`, on devrait écrire :
+
 ```cpp
 a.operator<<(std::cout);  // 🤮 Syntaxe horrible
 a << std::cout;           // 🤮 À l'envers !
 ```
 
 En fonction libre :
+
 ```cpp
 std::cout << a;  // ✅ Naturel et lisible
 ```
@@ -242,6 +272,7 @@ std::cout << a;  // ✅ Naturel et lisible
 **Pourquoi retourner `std::ostream&` ?**
 
 Pour permettre le **chaînage** :
+
 ```cpp
 std::cout << "Value: " << a << " is " << b << std::endl;
 //         └─ retourne cout ─┘  └─ retourne cout ─┘
@@ -320,11 +351,13 @@ doc++;                 // ❌ Incrémenter un document ?!
 ### Le problème de modularité
 
 **Avec surcharge :**
+
 ```cpp
 Fixed result = a / b;  // Qu'est-ce qui se passe ? Division simple ? Arrondi ?
 ```
 
 **Sans surcharge (plus explicite) :**
+
 ```cpp
 Fixed result = a.divide(b);              // Clair
 Fixed result = a.divideWithRounding(b);  // Très clair
@@ -336,6 +369,7 @@ Fixed result = a.safeDivide(b);          // Ultra clair (vérifie division par 0
 ### Règle d'or
 
 **Utilise la surcharge d'opérateurs SEULEMENT si :**
+
 1. Le comportement est **universellement évident**
 2. Tu respectes les **propriétés mathématiques** attendues
 3. Le type représente une **valeur**, pas un **objet métier**
@@ -344,15 +378,15 @@ Fixed result = a.safeDivide(b);          // Ultra clair (vérifie division par 0
 
 ## 📊 Tableau de valeurs (exemples)
 
-| Valeur réelle | `_fixedPoint` (raw) | Conversion |
-|---------------|---------------------|------------|
-| `0` | `0` | `0 × 256 = 0` |
-| `1` | `256` | `1 × 256 = 256` |
-| `0.5` | `128` | `0.5 × 256 = 128` |
-| `10` | `2560` | `10 × 256 = 2560` |
-| `42.42` | `10860` | `42.42 × 256 ≈ 10860` |
-| `42.75` | `10944` | `42.75 × 256 = 10944` |
-| `1234.43` | `316014` | `1234.43 × 256 ≈ 316014` |
+| Valeur réelle | `_fixedPoint` (raw) | Conversion               |
+| ------------- | ------------------- | ------------------------ |
+| `0`           | `0`                 | `0 × 256 = 0`            |
+| `1`           | `256`               | `1 × 256 = 256`          |
+| `0.5`         | `128`               | `0.5 × 256 = 128`        |
+| `10`          | `2560`              | `10 × 256 = 2560`        |
+| `42.42`       | `10860`             | `42.42 × 256 ≈ 10860`    |
+| `42.75`       | `10944`             | `42.75 × 256 = 10944`    |
+| `1234.43`     | `316014`            | `1234.43 × 256 ≈ 316014` |
 
 **Précision minimale :** 1 raw bit = 1/256 ≈ 0.00390625
 
@@ -424,12 +458,12 @@ float toFloat() const {
 
 ### Opérateurs membres vs non-membres
 
-| Opérateur | Type | Pourquoi |
-|-----------|------|----------|
-| `operator=` | Membre | Doit accéder à `this` |
-| `operator+` | Membre (souvent) | Peut être membre |
-| `operator<<` | **Non-membre** | Le flux doit être à gauche |
-| `operator>>` | **Non-membre** | Le flux doit être à gauche |
+| Opérateur    | Type             | Pourquoi                   |
+| ------------ | ---------------- | -------------------------- |
+| `operator=`  | Membre           | Doit accéder à `this`      |
+| `operator+`  | Membre (souvent) | Peut être membre           |
+| `operator<<` | **Non-membre**   | Le flux doit être à gauche |
+| `operator>>` | **Non-membre**   | Le flux doit être à gauche |
 
 **Règle :** Si l'opérande de gauche est un objet externe (comme `std::ostream`), l'opérateur **doit** être non-membre.
 
@@ -450,6 +484,7 @@ Sans `const`, les méthodes ne pourraient **pas** être appelées sur des objets
 ## 📝 Checklist Complète
 
 **Implémentation :**
+
 - [ ] Constructeur `Fixed(int)` utilise `<< 8`
 - [ ] Constructeur `Fixed(float)` utilise `roundf(value * 256)`
 - [ ] `toInt()` utilise `>> 8`
@@ -461,11 +496,13 @@ Sans `const`, les méthodes ne pourraient **pas** être appelées sur des objets
 - [ ] Méthodes de conversion marquées `const`
 
 **Compilation :**
+
 - [ ] Compile sans warnings avec `-Wall -Wextra -Werror -std=c++98`
 - [ ] Le main fourni produit la sortie attendue
 - [ ] Les valeurs affichées sont correctes (ex: 42.4219)
 
 **Compréhension :**
+
 - [ ] Tu comprends **pourquoi** on multiplie/divise par 256
 - [ ] Tu sais **quand** utiliser `<<` vs `*` (entiers vs floats)
 - [ ] Tu comprends le rôle de `operator<<` (affichage naturel)
@@ -534,18 +571,23 @@ std::ostream& operator<<(std::ostream& os, Fixed const& fixed) {
 **Sans compiler, réponds mentalement :**
 
 1. Si `_fixedPoint = 512`, quelle est la valeur réelle ?
+
    - **Réponse :** `512 / 256 = 2.0`
 
 2. Si je veux stocker `10.5`, que vaut `_fixedPoint` ?
+
    - **Réponse :** `10.5 × 256 = 2688`
 
 3. Pourquoi `42.42f` devient `42.4219` ?
+
    - **Réponse :** Perte de précision due aux 8 bits fractionnaires (256 niveaux discrets)
 
 4. Que vaut `Fixed(42).toFloat()` ?
+
    - **Réponse :** `42.0` (pas de partie décimale)
 
 5. `value << 8` est équivalent à quoi pour les `int` ?
+
    - **Réponse :** `value * 256`
 
 6. Pourquoi utiliser `* 256` pour les `float` ?
@@ -556,12 +598,14 @@ std::ostream& operator<<(std::ostream& os, Fixed const& fixed) {
 ## 🚀 Pour la suite (ex02)
 
 **Tu vas ajouter :**
+
 - 6 opérateurs de comparaison (`>`, `<`, `>=`, `<=`, `==`, `!=`)
 - 4 opérateurs arithmétiques (`+`, `-`, `*`, `/`)
 - 4 opérateurs d'incrémentation (`++a`, `a++`, `--a`, `a--`)
 - Fonctions statiques `min()` et `max()`
 
 **Avec tes nouvelles connaissances, tu pourras :**
+
 ```cpp
 Fixed a(5.5f);
 Fixed b(2.0f);
@@ -583,8 +627,7 @@ if (a > b) {
 3. **`<< 8` = `× 256`** pour les entiers uniquement (pas pour float)
 4. **Conversions** : Utiliser `roundf()`, `/`, et décalages
 5. **`operator<<`** = Fonction non-membre qui rend l'objet "affichable"
-6. **Mot-clé `operator`** = Superpouvoir pour redéfinir +, -, *, <<, etc.
+6. **Mot-clé `operator`** = Superpouvoir pour redéfinir +, -, \*, <<, etc.
 7. **Utiliser avec sagesse** = Surcharge légitime pour types numériques, risqué ailleurs
 
 **Tu maîtrises maintenant un type numérique custom performant et élégant !** 💪✨
-
