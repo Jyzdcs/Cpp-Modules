@@ -1,7 +1,6 @@
 #include "ScavTrap.hpp"
 
 ScavTrap::ScavTrap() : ClapTrap() {
-	_name = "unkown";
 	_health = 100;
 	_energy = 50;
 	_attackDamage = 20;
