@@ -1,15 +1,21 @@
-#include "ClapTrap.hpp"
+#include "ScavTrap.hpp"
 
 int main(void) {
-	ClapTrap trap1("trap1");
-	ClapTrap trap2("trap2");
-	ClapTrap unknow;
+	ScavTrap scav2("scav2");
 
-	trap1.attack(trap2.getName());
-	trap2.takeDamage(trap1.getAttackDamage());
-	std::cout << "ClapTrap " << trap2.getName() << " has " << trap2.getEnergy() << " energy\n";
-	std::cout << "ClapTrap " << trap2.getName() << " has " << trap2.getHealth() << " health\n";
-	trap2.beReparaied(10);
-	std::cout << "ClapTrap " << trap2.getName() << " has " << trap2.getEnergy() << " energy\n";
-	std::cout << "ClapTrap " << trap2.getName() << " has " << trap2.getHealth() << " health\n";
+	ClapTrap trap1 = scav2;
+	ClapTrap trap2("trap2");
+
+	trap1.attack("test1");
+	trap2.attack("test2");
+	// scav2 = new ScavTrap("scavtrap1");
+	// scav2->attack("yo");
+	// delete scav2;
+	// ScavTrap* trap1 = new ScavTrap("trap1");
+	// trap1->attack("test");
+	// std::cout << "ScavTrap1 energy: " << trap1.getEnergy() << std::endl;
+	// std::cout << "ScavTrap1 Health: " << trap1.getHealth() << std::endl;
+	// std::cout << "ScavTrap1 Damage: " << trap1.getAttackDamage() << std::endl;
+	// trap1.guardGate();
+	// delete trap1;
 }
