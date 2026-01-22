@@ -46,6 +46,9 @@ int					ClapTrap::getAttackDamage() const {
 	return _attackDamage;
 };
 
+void	ClapTrap::setName(std::string name) {
+	_name = name;
+}
 
 void  ClapTrap::attack(const std::string& target) {
 	if (this->_health > 0 && this->_energy > 0) {
