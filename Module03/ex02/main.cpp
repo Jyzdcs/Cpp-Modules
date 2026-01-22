@@ -1,13 +1,21 @@
-#include "ScavTrap.hpp"
+#include "FragTrap.hpp"
 
 int main(void) {
-	ScavTrap scav2("scav2");
+	FragTrap frag1("frag1");
+	FragTrap frag2("frag2");
+	FragTrap frag3;
 
-	ClapTrap trap1 = scav2;
-	ClapTrap trap2("trap2");
+	std::cout << frag1.getEnergy() << std::endl;
+	frag1.attack("test");
+	std::cout << frag1.getEnergy() << std::endl;
 
-	trap1.attack("test1");
-	trap2.attack("test2");
+	// frag3 = frag2;
+	std::cout << frag3.getEnergy() << std::endl;
+	frag3 = frag1;
+	std::cout << frag3.getEnergy() << std::endl;
+
+	// trap1.attack("test1");
+	// trap2.attack("test2");
 	// scav2 = new ScavTrap("scavtrap1");
 	// scav2->attack("yo");
 	// delete scav2;

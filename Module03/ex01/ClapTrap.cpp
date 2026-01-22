@@ -20,6 +20,8 @@ ClapTrap::ClapTrap(ClapTrap const& src)
 ClapTrap& ClapTrap::operator=(ClapTrap const& src) {
 	if (&src != this) {
 		this->_name = src._name;
+		this->_attackDamage = src._attackDamage;
+		this->_energy = src._energy;
 	}
 	return *this;
 };

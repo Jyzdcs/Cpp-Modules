@@ -23,6 +23,8 @@ ScavTrap::ScavTrap(ScavTrap const& src)
 ScavTrap& ScavTrap::operator=(ScavTrap const& src) {
 	if (&src != this) {
 		this->_name = src._name;
+		this->_attackDamage = src._attackDamage;
+		this->_energy = src._energy;
 	}
 	return *this;
 };
