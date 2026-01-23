@@ -21,9 +21,10 @@ FragTrap::FragTrap(FragTrap const& src) : ClapTrap(src) {
 FragTrap& FragTrap::operator=(FragTrap const& src) {
 	std::cout << "operator assignement called\n";
 	if (&src != this) {
-		this->setName(src.getName());
+		this->_name = src._name;
 		this->_attackDamage = src._attackDamage;
 		this->_energy = src._energy;
+		this->_health = src._health;
 	};
 	return *this;
 }

@@ -3,10 +3,8 @@
 # include <iostream>
 
 class ClapTrap {
-	private:
-		std::string 		_name;
-
 	protected:
+		std::string 		_name;
 		unsigned int		_health;
 		unsigned int		_energy;
 		unsigned int		_attackDamage;

@@ -22,6 +22,7 @@ ClapTrap& ClapTrap::operator=(ClapTrap const& src) {
 		this->_name = src._name;
 		this->_attackDamage = src._attackDamage;
 		this->_energy = src._energy;
+		this->_health = src._health;
 	}
 	return *this;
 };

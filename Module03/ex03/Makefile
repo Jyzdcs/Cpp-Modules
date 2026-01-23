@@ -1,5 +1,6 @@
 CXX = c++
 FLAGS = -Wall -Werror -Wextra -std=c++98
+# -Wshadow -Wno-shadow
 
 SRCS = ClapTrap.cpp main.cpp ScavTrap.cpp FragTrap.cpp DiamondTrap.cpp
 OBJS = $(SRCS:.cpp=.o)
