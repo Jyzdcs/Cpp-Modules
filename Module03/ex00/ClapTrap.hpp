@@ -3,7 +3,7 @@
 # include <iostream>
 
 class ClapTrap {
-	protected:
+	private:
 		std::string 		_name;
 		unsigned int		_health;
 		unsigned int		_energy;
@@ -12,8 +12,8 @@ class ClapTrap {
 	public:
 		ClapTrap();
 		ClapTrap(std::string name);
-		ClapTrap(ClapTrap const& src);
-		ClapTrap& operator=(ClapTrap const& src);
+		ClapTrap(const ClapTrap &src);
+		ClapTrap& operator=(const ClapTrap &src);
 		~ClapTrap();
 
 		std::string	getName() const;
