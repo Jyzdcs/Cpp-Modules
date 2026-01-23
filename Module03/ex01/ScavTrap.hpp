@@ -7,8 +7,8 @@ class ScavTrap : public ClapTrap {
 	public:
 		ScavTrap();
 		ScavTrap(std::string name);
-		ScavTrap(ScavTrap const &src);
-		ScavTrap& operator=(ScavTrap const &src);
+		ScavTrap(const ScavTrap &src);
+		ScavTrap& operator=(const ScavTrap &src);
 		~ScavTrap();
 
 		void	attack(const std::string& target);
