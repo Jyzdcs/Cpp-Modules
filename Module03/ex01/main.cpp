@@ -1,13 +1,19 @@
 #include "ScavTrap.hpp"
 
 int main(void) {
-	ScavTrap scav2("scav2");
+	ScavTrap *scav = new ScavTrap();
+	ClapTrap *clap = scav;
+	delete clap;
+	return 0;
 
-	ClapTrap trap1 = scav2;
-	ClapTrap trap2("trap2");
+	// ScavTrap scav2("scav2");
 
-	trap1.attack("test1");
-	trap2.attack("test2");
+	// ClapTrap trap1 = scav2;
+	// ClapTrap trap2("trap2");
+
+	// trap1.attack("test1");
+	// trap2.attack("test2");
+
 	// scav2 = new ScavTrap("scavtrap1");
 	// scav2->attack("yo");
 	// delete scav2;
