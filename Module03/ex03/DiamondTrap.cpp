@@ -36,3 +36,7 @@ void	DiamondTrap::whoAmI() {
 	std::cout << "Hi my realName is " << this->_name << std::endl;
 	std::cout << "And my clapTrap name is " << ClapTrap::_name << std::endl;
 }
+
+void  DiamondTrap::attack(const std::string& target) {
+	this->ScavTrap::attack(target);
+};
