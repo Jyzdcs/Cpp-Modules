@@ -3,17 +3,17 @@
 DiamondTrap::DiamondTrap() : ClapTrap(), ScavTrap(), FragTrap() {
 	_name = "Unknown";
 	_energy = 50;
-	std::cout << "DiamondTrap " << _name << " default constructor called\n";
+	std::cout << "[DiamondTrap] " << _name << " default constructor called\n";
 };
 
 DiamondTrap::DiamondTrap(std::string name) : ClapTrap(name + "_clap_name"), ScavTrap(name), FragTrap(name) {
 	_name = name;
 	_energy = 50;
-	std::cout << "DiamondTrap " << _name << " parameter constructor called\n";
+	std::cout << "[DiamondTrap] " << _name << " parameter constructor called\n";
 };
 
 DiamondTrap::DiamondTrap(DiamondTrap const& src) : ClapTrap(src), ScavTrap(src), FragTrap(src) {
-	std::cout << "DiamondTrap " << _name << " copy constructor called\n";
+	std::cout << "[DiamondTrap] " << _name << " copy constructor called\n";
 };
 
 DiamondTrap& DiamondTrap::operator=(DiamondTrap const& src) {
@@ -29,7 +29,7 @@ DiamondTrap& DiamondTrap::operator=(DiamondTrap const& src) {
 }
 
 DiamondTrap::~DiamondTrap() {
-	std::cout << "DiamondTrap " << _name << " destructor called\n";
+	std::cout << "[DiamondTrap] " << _name << " destructor called\n";
 }
 
 void	DiamondTrap::whoAmI() {

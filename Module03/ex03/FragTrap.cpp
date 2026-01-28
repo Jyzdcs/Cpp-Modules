@@ -4,18 +4,18 @@ FragTrap::FragTrap() : ClapTrap() {
 	_health = 100;
 	_energy = 100;
 	_attackDamage = 30;
-	std::cout << "FragTrap " << this->getName() << " default constructor called\n";
+	std::cout << "[FragTrap] " << this->getName() << " default constructor called\n";
 };
 
 FragTrap::FragTrap(std::string name) : ClapTrap(name) {
 	_health = 100;
 	_energy = 100;
 	_attackDamage = 30;
-	std::cout << "FragTrap " << this->getName() << " default constructor called\n";
+	std::cout << "[FragTrap] " << this->getName() << " default constructor called\n";
 };
 
 FragTrap::FragTrap(FragTrap const& src) : ClapTrap(src) {
-	std::cout << "FragTrap " << this->getName() << " copy constructor called\n";
+	std::cout << "[FragTrap] " << this->getName() << " copy constructor called\n";
 };
 
 FragTrap& FragTrap::operator=(FragTrap const& src) {
@@ -30,18 +30,18 @@ FragTrap& FragTrap::operator=(FragTrap const& src) {
 }
 
 FragTrap::~FragTrap() {
-	std::cout << "FragTrap " << this->getName() << " default constructor called\n";
+	std::cout << "[FragTrap] " << this->getName() << " default constructor called\n";
 };
 
 void FragTrap::highFiveGuys() {
-	std::cout << "FragTrap " << this->getName() << " is sending a positive high-fives request\n";
+	std::cout << "[FragTrap] " << this->getName() << " is sending a positive high-fives request\n";
 };
 
 void  FragTrap::attack(const std::string& target) {
 	if (this->_health > 0 && this->_energy > 0) {
-		std::cout << "FragTrap " << this->_name << " attacks " << target << " causing " << _attackDamage << " points of damage!\n";
+		std::cout << "[FragTrap] " << this->_name << " attacks " << target << " causing " << _attackDamage << " points of damage!\n";
 		_energy -= 1;
 	} else {
-		std::cout << "FragTrap " << this->_name << " can't attack cause of health or energy !\n";
+		std::cout << "[FragTrap] " << this->_name << " can't attack cause of health or energy !\n";
 	}
 };

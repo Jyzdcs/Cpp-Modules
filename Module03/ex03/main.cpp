@@ -3,9 +3,10 @@
 
 int main(void) {
 	std::cout << "hi\n";
-	DiamondTrap diamondDefault;
+  DiamondTrap *ClassA = new DiamondTrap("diamond1");
+  FragTrap *trap1 = ClassA;
 
-	diamondDefault.attack("test");
+	delete trap1;
 	// DiamondTrap diamondParam("Param");
 	// std::cout << diamondParam.getHealth() << std::endl;
 	// std::cout << diamondParam.getEnergy() << std::endl;
