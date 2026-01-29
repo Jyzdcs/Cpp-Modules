@@ -1,47 +1,64 @@
-#include "Cat.hpp"
-#include "Dog.hpp"
-#include "wrong/WrongAnimal.hpp"
-#include "wrong/WrongCat.hpp"
+// #include "Cat.hpp"
+// #include "Dog.hpp"
+// #include "wrong/WrongAnimal.hpp"
+// #include "wrong/WrongCat.hpp"
+#include <iostream>
+#include "Brain.hpp"
 
 int	main(void){
-	// Dog dog1;
-	// Cat cat1;
+	// ------------------------------------------------ Classic Test ----------------------------------------------------------------
+	// std::string arr[100];
+	// std::string arr1[100];
 
-	// dog1.makeSound();
-	// cat1.makeSound();
+	// arr[0] = "damn!";
+	// arr[1] = "...";
+	// arr[2] = "damn!";
+	// arr[3] = "...";
 
-	// std::cout << "Type of dog1 is " << dog1.getType() << std::endl;
-	// std::cout << "Type of cat1 is " << cat1.getType() << std::endl;
+	// for (int i = 0; arr[i] != ""; i++) {
+	// 	std::cout << arr[i] << std::endl;
+	// }
 
-	// -------------------------------------------------------------------------------------
+	// ------------------------------------------------ COPY TEST ----------------------------------------------------------------
+	// Brain brain0;
 
-	// Animal *animal0 = new Animal();
-	// Animal *animal1 = new Dog();
-	// Animal *animal2 = new Cat();
+	// for (int i = 0; i < 100; i++) {
+	// 	brain0.setIdea("Lafeve");
+	// }
 
-	// animal0->makeSound();
-	// animal1->makeSound();
-	// animal2->makeSound();
+	// Brain brain1(brain0);
+	// std::string *ideas = brain1.getIdeas();
+	// for (int i = 0; ideas[i] != ""; i++) {
+	// 	std::cout << ideas[i] << " " << i << std::endl;
+	// }
 
-	// std::cout << "Type of animal0 is " << animal0->getType() << std::endl;
-	// std::cout << "Type of animal1 is " << animal1->getType() << std::endl;
-	// std::cout << "Type of animal2 is " << animal2->getType() << std::endl;
+	// ------------------------------------------------ Operand Assign Test ----------------------------------------------------------------
+	// Brain brain0;
+	// Brain brain1;
+	
+	// for (int i = 0; i < 10; i++) {
+	// 	brain0.setIdea("Lafeve");
+	// };
+	// for (int j = 0; j < 5; j++) {
+	// 	brain1.setIdea("Elyslime");
+	// };
+	
+	// std::cout << "\n\nBrain0 : \n";
+	// std::string *ideas0 = brain0.getIdeas();
+	// for (int i = 0; ideas0[i] != ""; i++) {
+	// 	std::cout << ideas0[i] << " " << i << std::endl;
+	// }
+	
+	// std::cout << "\n\nBrain1 : \n";
+	// std::string *ideas1 = brain1.getIdeas();
+	// for (int i = 0; ideas1[i] != ""; i++) {
+	// 	std::cout << ideas1[i] << " " << i << std::endl;
+	// }
 
-	// delete animal0;
-	// delete animal1;
-	// delete animal2;
-
-	// -------------------------------------------------------------------------------------
-
-	// WrongAnimal *animal0 = new WrongAnimal();
-	// WrongAnimal *animal1 = new WrongCat();
-
-	// animal0->makeSound();
-	// animal1->makeSound();
-
-	// std::cout << "Type of animal0 is " << animal0->getType() << std::endl;
-	// std::cout << "Type of animal1 is " << animal1->getType() << std::endl;
-
-	// delete animal0;
-	// delete animal1;
+	// brain0 = brain1;
+	// std::cout << "\n\nBrain0 : \n";
+	// ideas0 = brain0.getIdeas();
+	// for (int i = 0; ideas0[i] != ""; i++) {
+	// 	std::cout << ideas0[i] << " " << i << std::endl;
+	// }
 };
