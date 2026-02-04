@@ -1,7 +1,5 @@
-// #include "Cat.hpp"
-// #include "Dog.hpp"
-// #include "wrong/WrongAnimal.hpp"
-// #include "wrong/WrongCat.hpp"
+#include "Cat.hpp"
+#include "Dog.hpp"
 #include <iostream>
 #include "Brain.hpp"
 
@@ -61,4 +59,49 @@ int	main(void){
 	// for (int i = 0; ideas0[i] != ""; i++) {
 	// 	std::cout << ideas0[i] << " " << i << std::endl;
 	// }
+
+	// ------------------------------------------------ Deep copy test ------------------------------------------------
+	// Cat *cat(new Cat());
+	// cat->setIdea("Zzzzz");
+
+	// Cat cat1(*cat);
+	// std::cout << "\n";
+	
+	// Brain *catBrain = cat->getBrain();
+	// catBrain->printIdeas();
+	// std::cout << "\n";
+	// delete cat;
+
+	// std::cout << "\n";
+	// catBrain->printIdeas();
+	// std::cout << "\n";
+
+	// std::cout << "\n";
+	// Brain *cat1Brain = cat1.getBrain();
+	// cat1Brain->printIdeas();
+	// std::cout << "\n";
+	// ------------------------------------------------ main test ------------------------------------------------
+	// Animal *animals[6];
+	// animals[0] = new Dog();
+	// std::cout << "\n";
+	// animals[1] = new Dog();
+	// std::cout << "\n";
+	// animals[2] = new Dog();
+	// std::cout << "\n";
+	// animals[3] = new Cat();
+	// std::cout << "\n";
+	// animals[4] = new Cat();
+	// std::cout << "\n";
+	// animals[5] = new Cat();
+	// std::cout << "\n";
+
+	// for (int i = 0; i < 6; i++) {
+	// 	delete animals[i];
+	// 	std::cout << "\n";
+	// };
+	// ------------------------------------------------ subject test ------------------------------------------------
+	// const Animal* j = new Dog();
+	// const Animal* i = new Cat();
+	// delete j;//should not create a leak
+	// delete i;
 };
