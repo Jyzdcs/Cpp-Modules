@@ -24,5 +24,5 @@ std::string const&	AMateria::getType() {
 };
 
 void			AMateria::use(ICharacter& target) {
-	std::cout << "Actual AMateria has a undefined type\n";
+	std::cout << "Actual AMateria has a undefined type nothing happend to " << target.getName() << "\n";
 };
