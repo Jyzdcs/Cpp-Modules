@@ -8,24 +8,26 @@ Character::Character(std::string name) : _name(name) {
 };
 
 Character::Character(const Character& src) : _name(src.getName()) {
-	for (int i = 0; src._inventory[i]; i++) {
+	for (int i = 0; i < 4; i++) {
 		this->_inventory[i] = src._inventory[i]->clone();
 	};
+	std::cout << "[Character] copy constructor called\n";
 };
 
 Character& Character::operator=(const Character& src) {
 	if (this == &src)	return *this;
 
 	this->_name = src.getName();
-	for (int i = 0; src._inventory[i]; i++) {
+	for (int i = 0; i < 4; i++) {
 		this->_inventory[i] = src._inventory[i]->clone();
 	};
 	return *this;
 };
 
 Character::~Character() {
-	for (int i = 0; _inventory[i] == NULL; i++) {
-		delete _inventory[i];
+	for (int i = 0; i < 4; i++) {
+		if (_inventory[i] != NULL)
+			delete _inventory[i];
 	};
 	std::cout << "[Character] destructor called\n";
 };
