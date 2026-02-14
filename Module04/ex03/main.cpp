@@ -4,28 +4,34 @@
 #include "MateriaSource.hpp"
 
 int main(void) {
-	// -------------- DEEP COPY --------------
 	Character jyzdcs("Jyzdcs");
-	Ice				*ice01 = new Ice();
-	Cure				*cure01 = new Cure();
-	Ice				*ice02 = new Ice();
-	Ice				*ice03 = new Ice();
-	std::cout << std::endl;
+	MateriaSource source;
+	Cure*					cure = new Cure();
 
-	jyzdcs.equip(ice01);
-	jyzdcs.equip(ice02);
-	jyzdcs.equip(ice03);
-	jyzdcs.equip(cure01);
+	source.learnMateria(cure);
 
-	std::cout << std::endl;
-	Character zan(jyzdcs);
-	std::cout << std::endl;
+	// -------------- DEEP COPY --------------
+	// Character jyzdcs("Jyzdcs");
+	// Ice				*ice01 = new Ice();
+	// Cure				*cure01 = new Cure();
+	// Ice				*ice02 = new Ice();
+	// Ice				*ice03 = new Ice();
+	// std::cout << std::endl;
 
-	jyzdcs.unequip(0);
-	jyzdcs.use(0, zan);
-	zan.use(0, zan);
+	// jyzdcs.equip(ice01);
+	// jyzdcs.equip(ice02);
+	// jyzdcs.equip(ice03);
+	// jyzdcs.equip(cure01);
 
-	std::cout << std::endl;
+	// std::cout << std::endl;
+	// Character zan(jyzdcs);
+	// std::cout << std::endl;
+
+	// jyzdcs.unequip(0);
+	// jyzdcs.use(0, zan);
+	// zan.use(0, zan);
+
+	// std::cout << std::endl;
 	// -------------- ASSIGNEMENT OPERATOR --------------
 
 	// -------------- NORMAL USE CASE --------------
