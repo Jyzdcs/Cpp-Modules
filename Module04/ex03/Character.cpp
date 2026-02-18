@@ -17,6 +17,9 @@ Character::Character(const Character& src) : _name(src.getName()) {
 Character& Character::operator=(const Character& src) {
 	if (this == &src)	return *this;
 
+	for (int i = 0; i < 4; i++) {
+		delete _inventory[i];
+	}
 	this->_name = src.getName();
 	for (int i = 0; i < 4; i++) {
 		this->_inventory[i] = src._inventory[i]->clone();

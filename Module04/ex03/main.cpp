@@ -4,11 +4,17 @@
 #include "MateriaSource.hpp"
 
 int main(void) {
-	Character jyzdcs("Jyzdcs");
-	MateriaSource source;
-	Cure*					cure = new Cure();
+	// -------------- DESTRUCTOR MATERIASOURCE --------------
 
-	source.learnMateria(cure);
+	// -------------- DESTRUCTOR MATERIASOURCE --------------
+	// MateriaSource source;
+	// Cure*					cure = new Cure();
+	// Cure*					cure1 = new Cure();
+
+	// source.learnMateria(cure);
+	// source.learnMateria(cure);
+	// source.learnMateria(cure);
+	// source.learnMateria(cure1);
 
 	// -------------- DEEP COPY --------------
 	// Character jyzdcs("Jyzdcs");
@@ -48,23 +54,17 @@ int main(void) {
 	// -------------- DESTRUCTOR --------------
 
 	// Le destructor free en bouclant sur while inventory[i] == null
-	// Character jyzdcs("Jyzdcs");
-	// Ice				*ice01 = new Ice();
-	// Cure				*cure01 = new Cure();
-	// Ice				*ice02 = new Ice();
-	// Ice				*ice03 = new Ice();
+	Character 		jyzdcs("Jyzdcs");
+	MateriaSource	source;
 
-	// jyzdcs.equip(ice01);
-	// jyzdcs.equip(ice02);
-	// jyzdcs.equip(ice03);
-	// jyzdcs.equip(cure01);
+	source.learnMateria(new Cure());
+	source.learnMateria(new Ice());
+	source.learnMateria(NULL);
+	std::cout << std::endl;
 	
-	// jyzdcs.unequip(0);
+	jyzdcs.equip(source.createMateria("Cure"));
 
-	// delete ice01;
-	// delete ice02;
-	// delete ice03;
-	// delete cure01;
+	std::cout << std::endl;
 	// -------------- 
 
 	// Character jyzdcs("Jyzdcs");

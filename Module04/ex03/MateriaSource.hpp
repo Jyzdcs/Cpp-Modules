@@ -5,6 +5,9 @@
 class MateriaSource : public IMateriaSource {
 	private:
 		AMateria* _learned[4];
+		int				_idx;
+		int				getLearnedNbr();
+		bool 			isUniqueMateria(AMateria* materia);
 
 	public:
 		MateriaSource();
