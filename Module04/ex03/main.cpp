@@ -56,13 +56,16 @@ int main(void) {
 	// Le destructor free en bouclant sur while inventory[i] == null
 	Character 		jyzdcs("Jyzdcs");
 	MateriaSource	source;
+	AMateria*			materia;
 
 	source.learnMateria(new Cure());
 	source.learnMateria(new Ice());
 	source.learnMateria(NULL);
 	std::cout << std::endl;
 	
-	jyzdcs.equip(source.createMateria("Cure"));
+	materia = source.createMateria("Cure");
+	jyzdcs.equip(materia);
+	jyzdcs.equip(materia);
 
 	std::cout << std::endl;
 	// -------------- 

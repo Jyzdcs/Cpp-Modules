@@ -1,6 +1,6 @@
 CXX = c++
-# FLAGS = -std=c++98
-FLAGS = -Wall -Werror -Wextra -std=c++98
+FLAGS = -std=c++98
+# FLAGS = -Wall -Werror -Wextra -std=c++98
 
 SRCS = main.cpp AMateria.cpp Cure.cpp Ice.cpp Character.cpp MateriaSource.cpp
 OBJS = $(SRCS:.cpp=.o)
