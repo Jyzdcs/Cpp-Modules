@@ -35,6 +35,10 @@ int						AForm::getGradeToExec() const {
 	return _gradeToExec;
 };
 
+void								AForm::setIsSigned(bool isSigned) {
+	_isSigned = isSigned;
+};
+
 void								AForm::beSigned(Bureaucrat& bureaucrat) {
 	if (bureaucrat.getGrade() <= this->getGradeToSign()) {
 		this->_isSigned = true;

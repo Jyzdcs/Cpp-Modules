@@ -4,13 +4,17 @@
 #include "AForm.hpp"
 
 class PresidentialPardonForm : public AForm {
-	private:
-
 	public:
-		PresidentialPardonForm(const std::string name, const int gradeToSign, const int gradeToExec);
+		PresidentialPardonForm(const std::string target);
 		PresidentialPardonForm(const PresidentialPardonForm& src);
 		PresidentialPardonForm& operator=(const PresidentialPardonForm& src);
-		virtual ~PresidentialPardonForm() = 0;
+		virtual ~PresidentialPardonForm();
+
+		void	execute(Bureaucrat const& executor) const;
+
+		class NotSigned : public std::exception  {
+			const char* what() const throw();
+		};
 };
 
 
