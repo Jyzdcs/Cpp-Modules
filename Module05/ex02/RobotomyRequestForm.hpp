@@ -2,15 +2,16 @@
 #define ROBOTOMY_REQUEST_FORM_HPP
 #include <iostream>
 #include "AForm.hpp"
+#include <cstdlib>
 
 class RobotomyRequestForm : public AForm {
-	private:
-
 	public:
-		RobotomyRequestForm(const std::string name, const int gradeToSign, const int gradeToExec);
+		RobotomyRequestForm(const std::string name);
 		RobotomyRequestForm(const RobotomyRequestForm& src);
 		RobotomyRequestForm& operator=(const RobotomyRequestForm& src);
-		virtual ~RobotomyRequestForm() = 0;
+		~RobotomyRequestForm();
+
+		void	execute(Bureaucrat const& executor) const;
 };
 
 
