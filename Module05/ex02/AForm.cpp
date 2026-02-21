@@ -55,6 +55,10 @@ const char* AForm::GradeTooLowException::what() const throw() {
 	return "outOfRange: Grade is too low!";
 };
 
+const char* AForm::NotSigned::what() const throw() {
+	return "contextError: grade is not signed!";
+};
+
 std::ostream& operator<<(std::ostream& os, AForm const& src) {
 	if (src.getIsSigned()) {
 		os << src.getName() << " Aform is signed ! The grad to sign it was " << src.getGradeToSign() << " and to exec was " << src.getGradeToExec();

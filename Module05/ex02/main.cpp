@@ -4,7 +4,7 @@
 
 int main() {
 	try {
-		Bureaucrat kyks("kyks", 3);
+		Bureaucrat kyks("kyks", 13);
 		PresidentialPardonForm test("42");
 
 		kyks.signForm(&test);
@@ -14,7 +14,7 @@ int main() {
 	}
 	std::cout << std::endl;
 	try {
-		Bureaucrat kyks("kyks", 3);
+		Bureaucrat kyks("kyks", 30);
 		RobotomyRequestForm test("42");
 
 		kyks.signForm(&test);
@@ -24,7 +24,7 @@ int main() {
 	}
 	std::cout << std::endl;
 	try {
-		Bureaucrat kyks("kyks", 3);
+		Bureaucrat kyks("kyks",145);
 		ShrubberyCreationForm test("42");
 
 		kyks.signForm(&test);

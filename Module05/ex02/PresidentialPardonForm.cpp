@@ -21,11 +21,6 @@ PresidentialPardonForm::~PresidentialPardonForm() {
 	std::cout << "[PresidentialPardonForm] dtor called\n";
 };
 
-const char* PresidentialPardonForm::NotSigned::what() const throw() {
-	return "contextError: grade is not signed!";
-};
-
-
 void	PresidentialPardonForm::execute(Bureaucrat const& executor) const {
 	if (!this->getIsSigned()) {
 		throw NotSigned();

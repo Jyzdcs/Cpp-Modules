@@ -11,10 +11,6 @@ class PresidentialPardonForm : public AForm {
 		virtual ~PresidentialPardonForm();
 
 		void	execute(Bureaucrat const& executor) const;
-
-		class NotSigned : public std::exception  {
-			const char* what() const throw();
-		};
 };
 
 

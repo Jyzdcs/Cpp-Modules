@@ -22,9 +22,13 @@ ShrubberyCreationForm::~ShrubberyCreationForm() {
 };
 
 void	ShrubberyCreationForm::execute(Bureaucrat const& executor) const {
+	if (!this->getIsSigned()) {
+		throw NotSigned();
+	} else if (executor.getGrade() > this->getGradeToExec()) {
+		throw GradeTooLowException();
+	}
 	executor.getName();
 	std::ofstream outfile ((executor.getName() + "_shrubbery").c_str());
-
 	outfile << "                                              ." << std::endl;
 	outfile << "                                   .         ;  " << std::endl;
 	outfile << "      .              .              ;%     ;;   " << std::endl;
