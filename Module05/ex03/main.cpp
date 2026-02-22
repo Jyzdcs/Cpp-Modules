@@ -1,35 +1,22 @@
-#include "PresidentialPardonForm.hpp"
-#include "RobotomyRequestForm.hpp"
-#include "ShrubberyCreationForm.hpp"
+#include "Intern.hpp"
 
 int main() {
-	try {
-		Bureaucrat kyks("kyks", 13);
-		PresidentialPardonForm test("42");
+	AForm *shrubbery;
+	// AForm *robotomy;
+	// AForm *presidential;
 
-		kyks.signForm(&test);
-		kyks.executeForm(test);
-	} catch (std::exception& err) {
-		std::cout << err.what() << std::endl;
-	}
-	std::cout << std::endl;
 	try {
-		Bureaucrat kyks("kyks", 30);
-		RobotomyRequestForm test("42");
+		Bureaucrat kyks("pika", 1);
+		Intern test;
 
-		kyks.signForm(&test);
-		kyks.executeForm(test);
-	} catch (std::exception& err) {
-		std::cout << err.what() << std::endl;
+		shrubbery = test.makeForm("ShrubberyCreationForm", "test");
+		kyks.signForm(shrubbery);
+		kyks.executeForm(*shrubbery);
+		
+	}	catch (std::exception& err) {
+		std::cout << err.what();
 	}
-	std::cout << std::endl;
-	try {
-		Bureaucrat kyks("kyks",145);
-		ShrubberyCreationForm test("42");
-
-		kyks.signForm(&test);
-		kyks.executeForm(test);
-	} catch (std::exception& err) {
-		std::cout << err.what() << std::endl;
-	}
+	delete shrubbery;
+	// delete robotomy;
+	// delete presidential;
 }

@@ -1,7 +1,7 @@
 CXX = c++
 FLAGS = -Wall -Werror -Wextra -std=c++98
 
-SRCS = PresidentialPardonForm.cpp RobotomyRequestForm.cpp ShruberryCreationForm.cpp Bureaucrat.cpp AForm.cpp  main.cpp
+SRCS = PresidentialPardonForm.cpp RobotomyRequestForm.cpp ShruberryCreationForm.cpp Bureaucrat.cpp AForm.cpp Intern.cpp main.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 NAME = a.out
