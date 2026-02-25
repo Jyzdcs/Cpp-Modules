@@ -4,6 +4,17 @@ Intern::Intern() {
 	std::cout << "[Intern] ctor called\n";
 };
 
+Intern::Intern(const Intern &other) {
+  std::cout << "[Intern] Copy constructor called." << std::endl;
+  (void)other;
+}
+
+Intern &Intern::operator=(const Intern &other) {
+  std::cout << "[Intern] Copy assigment operator called." << std::endl;
+  (void)other;
+  return *this;
+}
+
 Intern::~Intern() {
 	std::cout << "[Intern] dtor called\n";
 };
