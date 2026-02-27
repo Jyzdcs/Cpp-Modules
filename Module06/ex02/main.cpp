@@ -8,8 +8,8 @@ int	main() {
 
 	srand(time(NULL));
 	random = base->generate();
-	base->identify(*random);
 	base->identify(random);
+	base->identify(*random);
 	
 	delete random;
 	delete base;
