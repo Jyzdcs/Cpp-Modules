@@ -15,7 +15,7 @@ ScalarConverter::ScalarConverter(const ScalarConverter &src) {
 ScalarConverter::~ScalarConverter() {}
 
 bool	ScalarConverter::isChar(std::string input) {
-	std::cout << "isChar ?" << std::endl;
+	// std::cout << "isChar ?" << std::endl;
 	if (input.size() == 1 and std::isprint(input[0]) and !std::isdigit(input[0])) {
 		std::cout << "true\n";
 		return true;
@@ -24,7 +24,7 @@ bool	ScalarConverter::isChar(std::string input) {
 };
 
 bool	ScalarConverter::isInt(std::string input) {
-	std::cout << "isInt ?" << std::endl;
+	// std::cout << "isInt ?" << std::endl;
 	const size_t	sign = input.find("-");
 
 	if (sign != 0 and sign != std::string::npos)
@@ -35,7 +35,7 @@ bool	ScalarConverter::isInt(std::string input) {
 };
 
 bool	ScalarConverter::isFloat(std::string input) {
-	std::cout << "isFloat ?" << std::endl;
+	// std::cout << "isFloat ?" << std::endl;
 	const size_t	sign = input.find("-");
 
 	if (sign != 0 and sign != std::string::npos)
@@ -55,7 +55,7 @@ bool	ScalarConverter::isFloat(std::string input) {
 };
 
 bool	ScalarConverter::isDouble(std::string input) {
-	std::cout << "isDouble ?" << std::endl;
+	// std::cout << "isDouble ?" << std::endl;
 	const size_t	sign = input.find("-");
 
 	if (sign != 0 and sign != std::string::npos)
