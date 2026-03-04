@@ -1,7 +1,7 @@
 CXX = c++
 FLAGS = -Wall -Werror -Wextra -std=c++98
 
-SRCS = main.cpp whatever.cpp
+SRCS = main.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 NAME = a.out
