@@ -19,6 +19,7 @@ class Span {
 		~Span();
 
 		void	addNumber(int nb);
+		void	addNumbers(std::vector<int> l);
 		void	display();
 
 		int	shortestSpan();

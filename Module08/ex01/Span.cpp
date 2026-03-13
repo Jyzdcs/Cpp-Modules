@@ -28,6 +28,12 @@ void	Span::addNumber(int nb) {
 	_arr.push_back(nb);
 };
 
+void	Span::addNumbers(std::vector<int> l) {
+	if (l.size() > _size_max - (_arr.size() - 1))
+		throw Span::MaxCapacityException();
+	_arr.insert(_arr.end(), l.begin(), l.end());
+};
+
 void	Span::display() {
 	for (unsigned int i = 0; i < _arr.size(); i++) {
 		if (i + 1 == _arr.size()) {

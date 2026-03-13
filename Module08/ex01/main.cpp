@@ -1,23 +1,23 @@
 #include "Span.hpp"
 
 int main(void) {
-	// std::vector<int>	arr(10);
+	try {
+		Span span(20);
 
-	// try {
-	// 	Span span(7);
-
-	// 	span.addNumber(133);
-	// 	span.addNumber(23);
-	// 	span.addNumber(34);
-	// 	span.addNumber(1);
-	// 	span.addNumber(1);
-	// 	span.addNumber(-3);
-	// 	span.addNumber(-2);
-	// 	std::cout << span.shortestSpan() << std::endl;
-	// 	std::cout << span.longestSpan() << std::endl;
-	// } catch (std::exception& err) {
-	// 	std::cout << err.what();
-	// }
+		span.addNumber(133);
+		span.addNumber(23);
+		std::cout << span.shortestSpan() << std::endl;
+		std::cout << span.longestSpan() << std::endl;
+		int arr[] = {11, 23, 45, 89};
+    int n = sizeof(arr) / sizeof(arr[0]);
+		std::vector<int> v(arr, arr + n);
+		span.addNumbers(v);
+		span.display();
+		std::cout << span.shortestSpan() << std::endl;
+		std::cout << span.longestSpan() << std::endl;
+	} catch (std::exception& err) {
+		std::cout << err.what();
+	}
 
 	// try {
 	// 	Span sp = Span(7);
