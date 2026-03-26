@@ -22,7 +22,7 @@ class BitcoinExchange {
 
 		bool	isValidExtension(std::string fileName);
 
-		int		getDateValue(std::string date);
+		double		getDateValue(std::string date);
 
 		void	calculBtc();
 		void	printInput();

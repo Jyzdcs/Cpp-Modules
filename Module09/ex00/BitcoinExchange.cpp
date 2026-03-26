@@ -55,7 +55,7 @@ bool	BitcoinExchange::isValidExtension(std::string fileName) {
 	return false;
 };
 
-int		BitcoinExchange::getDateValue(std::string date) {
+double		BitcoinExchange::getDateValue(std::string date) {
 	std::vector<std::string>	dataCsv;
 	std::string								value;
 	dataCsv.swap(fileHandler._fileContent);
@@ -64,15 +64,16 @@ int		BitcoinExchange::getDateValue(std::string date) {
 	for (size_t i = 1; i < dataCsv.size(); i++) {
 		if (dataCsv[i].find(date) != std::string::npos) {
 			value.append(dataCsv[i].substr(dataCsv[i].find(",") + 1));
-			return atoi(value.c_str());
+			std::cout << "value found: " << std::strtod(value.c_str(), NULL) << std::endl;
+			return std::strtod(value.c_str(), NULL);
 		};
 	}
 	return 0;
 };
 
 void BitcoinExchange::calculBtc() {
-	int	value;
-	int	result;
+	double	value;
+	double	result;
 	
 	_lines.swap(fileHandler._fileContent);
 	if (_lines[0] != "date | value")	{
@@ -97,7 +98,7 @@ void BitcoinExchange::calculBtc() {
 					// std::cout << "Success: valid date format = " << date << std::endl;
 					value = getDateValue(date);
 					// std::cout << "value of date '" << date << "' = " << value << std::endl;
-					result = value * atoi(multiplier.c_str());
+					result = value * std::strtod(multiplier.c_str(), NULL);
 					std::cout << date << " => " << multiplier << " = " << result << std::endl;
 				}
 			}
