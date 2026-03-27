@@ -18,6 +18,10 @@ class BitcoinExchange {
 		bool	isValidDateFormat(std::string date);
 		bool	isOnlyDigit(std::string str);
 
+		double	searchInDays(std::string year, std::string month);
+		double	searchInMonths(std::string year);
+		double	searchInYears(std::string year);
+
 	public:
 		BitcoinExchange();
 		~BitcoinExchange();
