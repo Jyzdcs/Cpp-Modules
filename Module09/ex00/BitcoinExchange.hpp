@@ -12,6 +12,8 @@
 class BitcoinExchange {
 	private:
 		std::vector<std::string>	_lines;
+		std::vector<std::string>	_dataCsv;
+		void	splitDateIntoVector(std::string date, std::vector<std::string> &v);
 		bool	isValidNumber(std::string str);
 		bool	isValidDateFormat(std::string date);
 		bool	isOnlyDigit(std::string str);
@@ -22,6 +24,7 @@ class BitcoinExchange {
 
 		bool	isValidExtension(std::string fileName);
 
+		double		closestDateValue(std::string date);
 		double		getDateValue(std::string date);
 
 		void	calculBtc();
