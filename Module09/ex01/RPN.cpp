@@ -29,7 +29,7 @@ void	Rpn::calcul() {
 				throw ErrorRpnException();
 			_stack.push(_rpn[i] - '0');
 		} else {
-			if (_stack.size() != 2) {
+			if (_stack.size() < 2) {
 				throw ErrorRpnException();
 			}
 			int secondNum = _stack.top();
