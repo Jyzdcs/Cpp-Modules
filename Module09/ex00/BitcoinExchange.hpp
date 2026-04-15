@@ -13,6 +13,7 @@ class BitcoinExchange {
 	private:
 		std::vector<std::string>	_lines;
 		std::vector<std::string>	_dataCsv;
+		std::string	intToString(int value);
 		void	splitDateIntoVector(std::string date, std::vector<std::string> &v);
 		bool	isValidNumber(std::string str);
 		bool	isValidDateFormat(std::string date);
@@ -21,6 +22,7 @@ class BitcoinExchange {
 		double	searchInDays(std::string year, std::string month);
 		double	searchInMonths(std::string year);
 		double	searchInYears(std::string year);
+
 
 	public:
 		BitcoinExchange();

@@ -1,5 +1,7 @@
 #include "BitcoinExchange.hpp"
-#include "string"
+#include "stdlib.h"
+#include <string>
+#include <sstream>
 
 BitcoinExchange::BitcoinExchange() {
 	fileHandler.extractFileContent("./data.csv");
@@ -11,6 +13,12 @@ BitcoinExchange::BitcoinExchange() {
 BitcoinExchange::~BitcoinExchange() {
 	std::cout << "[BitcoinExchange] dtor called" << std::endl;
 };
+
+std::string BitcoinExchange::intToString(int value) {
+    std::stringstream ss;
+    ss << value;
+    return ss.str();
+}
 
 void	BitcoinExchange::splitDateIntoVector(std::string date, std::vector<std::string> &v) {
 	size_t	pos = date.find("-");
@@ -75,12 +83,12 @@ double	BitcoinExchange::searchInDays(std::string year, std::string month) {
 
 	for (int dayNum = 31; dayNum > 0; dayNum--) {
 		std::string tmpDate = year + "-" + month;
-		tmpDate += dayNum < 10 ? "-0" + std::to_string(dayNum) : "-" + std::to_string(dayNum);
+		tmpDate += dayNum < 10 ? "-0" + intToString(dayNum) : "-" + intToString(dayNum);
 		for (size_t	i = 0; i < _dataCsv.size(); i++) {
 			if (_dataCsv[i].find(tmpDate) != std::string::npos) {
 				size_t	valueIdx = _dataCsv[i].find(",") + 1;
 				value = _dataCsv[i].substr(valueIdx);
-				// std::cout << "date found: " << year << "-" << month << "-" << std::to_string(dayNum) << std::endl;
+				// std::cout << "date found: " << year << "-" << month << "-" << intToString(dayNum) << std::endl;
 				return std::strtod(value.c_str(), NULL);
 			}
 		}
@@ -92,7 +100,7 @@ double	BitcoinExchange::searchInMonths(std::string year) {
 	double value;
 
 	for (int monthNum = 12; monthNum > 0; monthNum--) {
-		value = searchInDays(year, std::to_string(monthNum));
+		value = searchInDays(year, intToString(monthNum));
 		if (value != -1)	return value;
 	}
 	return -1;
@@ -102,7 +110,7 @@ double	BitcoinExchange::searchInYears(std::string year) {
 	double value;
 
 	for (int yearNum = atoi(year.c_str()); yearNum > 2008; yearNum--) {
-		value = searchInMonths(std::to_string(yearNum));
+		value = searchInMonths(intToString(yearNum));
 		if (value != -1)	return value;
 	}
 	return -1;
@@ -120,10 +128,10 @@ double		BitcoinExchange::closestDateValue(std::string date) {
 	for (int day = atoi(splittedDate[2].c_str()); day > 0; day--) {
 		std::string tmpDate = year;
 		tmpDate += "-" + month;
-		tmpDate += day < 10 ? "-0" + std::to_string(day) : "-" + std::to_string(day);
+		tmpDate += day < 10 ? "-0" + intToString(day) : "-" + intToString(day);
 		for (size_t i = 1; i < _dataCsv.size(); i++) {
 			if (_dataCsv[i].find(tmpDate) != std::string::npos) {
-				// std::cout << "date found: " << year << "-" << month << "-" << std::to_string(day) << std::endl;
+				// std::cout << "date found: " << year << "-" << month << "-" << intToString(day) << std::endl;
 				value.append(_dataCsv[i].substr(_dataCsv[i].find(",") + 1));
 				return std::strtod(value.c_str(), NULL);
 			}
