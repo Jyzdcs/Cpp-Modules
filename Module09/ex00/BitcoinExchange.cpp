@@ -14,13 +14,33 @@ BitcoinExchange::~BitcoinExchange() {
 	std::cout << "[BitcoinExchange] dtor called" << std::endl;
 };
 
+const std::string& BitcoinExchange::list_at(const std::list<std::string> &lst, std::size_t index) {
+	if (index >= lst.size())
+			throw std::out_of_range("list_at: index out of range");
+
+	std::list<std::string>::const_iterator it = lst.begin();
+	for (std::size_t i = 0; i < index; ++i)
+			++it;
+	return *it;
+}
+
+std::string& BitcoinExchange::modify_list_at(std::list<std::string> &lst, std::size_t index) {
+	if (index >= lst.size())
+			throw std::out_of_range("list_at: index out of range");
+
+	std::list<std::string>::iterator it = lst.begin();
+	for (std::size_t i = 0; i < index; ++i)
+			++it;
+	return *it;
+}	
+
 std::string BitcoinExchange::intToString(int value) {
     std::stringstream ss;
     ss << value;
     return ss.str();
 }
 
-void	BitcoinExchange::splitDateIntoVector(std::string date, std::vector<std::string> &v) {
+void	BitcoinExchange::splitDateIntoVector(std::string date, std::list<std::string> &v) {
 	size_t	pos = date.find("-");
 	while (pos != std::string::npos) {
 		v.push_back(date.substr(0, pos));
@@ -51,7 +71,7 @@ bool	BitcoinExchange::isOnlyDigit(std::string str) {
 };
 
 bool	BitcoinExchange::isValidDateFormat(std::string str) {
-	std::vector<std::string>	date;
+	std::list<std::string>	date;
 
 	size_t	pos = str.find("-");
 	while (pos != std::string::npos) {
@@ -62,11 +82,11 @@ bool	BitcoinExchange::isValidDateFormat(std::string str) {
 	date.push_back(str);
 	if (date.size() != 3)	return false;
 	for (size_t	i = 0; i < date.size(); i++) {
-		if (!isOnlyDigit(date[i]))	return false;
+		if (!isOnlyDigit(list_at(date, i)))	return false;
 	};
-	if (atoi(date[0].c_str()) < 2009)	return false;
-	if (atoi(date[1].c_str()) < 1 || date[1].length() != 2)	return false;
-	if (atoi(date[2].c_str()) < 1 || date[2].length() != 2)	return false;
+	if (atoi(list_at(date, 0).c_str()) < 2009)	return false;
+	if (atoi(list_at(date, 1).c_str()) < 1 || list_at(date, 1).length() != 2)	return false;
+	if (atoi(list_at(date, 2).c_str()) < 1 || list_at(date, 2).length() != 2)	return false;
 	return true;
 };
 
@@ -85,9 +105,9 @@ double	BitcoinExchange::searchInDays(std::string year, std::string month) {
 		std::string tmpDate = year + "-" + month;
 		tmpDate += dayNum < 10 ? "-0" + intToString(dayNum) : "-" + intToString(dayNum);
 		for (size_t	i = 0; i < _dataCsv.size(); i++) {
-			if (_dataCsv[i].find(tmpDate) != std::string::npos) {
-				size_t	valueIdx = _dataCsv[i].find(",") + 1;
-				value = _dataCsv[i].substr(valueIdx);
+			if (list_at(_dataCsv, i).find(tmpDate) != std::string::npos) {
+				size_t	valueIdx = list_at(_dataCsv, i).find(",") + 1;
+				value = list_at(_dataCsv, i).substr(valueIdx);
 				// std::cout << "date found: " << year << "-" << month << "-" << intToString(dayNum) << std::endl;
 				return std::strtod(value.c_str(), NULL);
 			}
@@ -120,31 +140,31 @@ double		BitcoinExchange::closestDateValue(std::string date) {
 	std::string								year;
 	std::string								month;
 	std::string								value;
-	std::vector<std::string>	splittedDate;
+	std::list<std::string>	splittedDate;
 
 	splitDateIntoVector(date, splittedDate);
-	year = splittedDate[0];
-	month = splittedDate[1];
-	for (int day = atoi(splittedDate[2].c_str()); day > 0; day--) {
+	year = list_at(splittedDate, 0);
+	month = list_at(splittedDate, 1);
+	for (int day = atoi(list_at(splittedDate, 2).c_str()); day > 0; day--) {
 		std::string tmpDate = year;
 		tmpDate += "-" + month;
 		tmpDate += day < 10 ? "-0" + intToString(day) : "-" + intToString(day);
 		for (size_t i = 1; i < _dataCsv.size(); i++) {
-			if (_dataCsv[i].find(tmpDate) != std::string::npos) {
+			if (list_at(_dataCsv, i).find(tmpDate) != std::string::npos) {
 				// std::cout << "date found: " << year << "-" << month << "-" << intToString(day) << std::endl;
-				value.append(_dataCsv[i].substr(_dataCsv[i].find(",") + 1));
+				value.append(list_at(_dataCsv, i).substr(list_at(_dataCsv, i).find(",") + 1));
 				return std::strtod(value.c_str(), NULL);
 			}
 		}
 	}
-	return searchInYears(splittedDate[0]);
+	return searchInYears(list_at(splittedDate, 0));
 };
 
 double		BitcoinExchange::getDateValue(std::string date) {
 	std::string								value;
 
 	if (atoi(date.substr(0, date.find("-")).c_str()) > 2022) {
-		return std::strtod(_dataCsv[_dataCsv.size() - 1].substr(_dataCsv[_dataCsv.size() - 1].find(",") + 1).c_str(), NULL);
+		return std::strtod(list_at(_dataCsv, _dataCsv.size() - 1).substr(list_at(_dataCsv, _dataCsv.size() - 1).find(",") + 1).c_str(), NULL);
 	}
 	return closestDateValue(date);
 };
@@ -154,19 +174,19 @@ void BitcoinExchange::calculBtc() {
 	double	result;
 	
 	_lines.swap(fileHandler._fileContent);
-	if (_lines[0] != "date | value")	{
+	if (list_at(_lines, 0) != "date | value")	{
 		std::cout << "Error: invalid first line" << std::endl;
 	};
 	for (size_t i = 1; i < _lines.size(); i++) {
-		if (_lines[i].find(" | ") == std::string::npos)	{
+		if (list_at(_lines, i).find(" | ") == std::string::npos)	{
 			std::cout << "Error: invalid input missing | " << std::endl;
 		} else {
-			std::vector<std::string>	linePart;
+			std::list<std::string>	linePart;
 			std::string	date;
 			std::string	multiplier;
-			date.append(_lines[i].substr(0, _lines[i].find(" | ")));
-			_lines[i].erase(0, _lines[i].find(" | ") + 3);
-			multiplier.append(_lines[i]);
+			date.append(list_at(_lines, i).substr(0, list_at(_lines, i).find(" | ")));
+			modify_list_at(_lines, i).erase(0, list_at(_lines, i).find(" | ") + 3);
+			multiplier.append(list_at(_lines, i));
 			if (!isValidNumber(multiplier)) {
 				std::cout << "Error: invalid number value = " << multiplier << std::endl;
 			} else {
@@ -183,7 +203,7 @@ void BitcoinExchange::calculBtc() {
 };
 
 void	BitcoinExchange::printInput() {
-	for (std::vector<std::string>::iterator it = _lines.begin(); it != _lines.end(); ++it) {
+	for (std::list<std::string>::iterator it = _lines.begin(); it != _lines.end(); ++it) {
 		std::cout << *it << std::endl; 
 	};
 };
@@ -212,7 +232,7 @@ void	BitcoinExchange::FileHandler::extractFileContent(std::string path) {
 }
 
 void	BitcoinExchange::FileHandler::printFileContent() {
-	for (std::vector<std::string>::iterator it = _fileContent.begin(); it != _fileContent.end(); ++it) {
+	for (std::list<std::string>::iterator it = _fileContent.begin(); it != _fileContent.end(); ++it) {
 		std::cout << *it << std::endl; 
 	};
 };

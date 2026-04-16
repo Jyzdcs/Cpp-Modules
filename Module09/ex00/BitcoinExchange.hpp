@@ -2,7 +2,7 @@
 #define BITCOIN_EXCHANGE_HPP
 
 #include <iostream>
-#include <vector>
+#include <list>
 #include <fstream>
 #include <string>
 #include <cctype>
@@ -11,10 +11,12 @@
 
 class BitcoinExchange {
 	private:
-		std::vector<std::string>	_lines;
-		std::vector<std::string>	_dataCsv;
+		std::list<std::string>	_lines;
+		std::list<std::string>	_dataCsv;
+		const std::string& list_at(const std::list<std::string> &lst, std::size_t index);
+		std::string& modify_list_at(std::list<std::string> &lst, std::size_t index);
 		std::string	intToString(int value);
-		void	splitDateIntoVector(std::string date, std::vector<std::string> &v);
+		void	splitDateIntoVector(std::string date, std::list<std::string> &v);
 		bool	isValidNumber(std::string str);
 		bool	isValidDateFormat(std::string date);
 		bool	isOnlyDigit(std::string str);
@@ -47,7 +49,7 @@ class BitcoinExchange {
 				FileHandler();
 				~FileHandler();
 				
-				std::vector<std::string> _fileContent;
+				std::list<std::string> _fileContent;
 
 				void	extractFileContent(std::string path);
 				void	printFileContent();
