@@ -44,6 +44,16 @@ void	Span::display() {
 	}
 }
 
+void Span::addRandomNumbers(unsigned int quantity) {
+		std::srand(static_cast<unsigned int>(std::time(NULL)));
+		while (quantity > 0) {
+			int randomNum = std::rand() - RAND_MAX / 2;
+			this->addNumber(randomNum);
+			std::cout << "Random number added: " << randomNum << std::endl;
+			quantity--;
+		}
+}
+
 int	Span::shortestSpan() {
 	int shortestSpan;
 

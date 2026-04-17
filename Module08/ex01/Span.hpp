@@ -21,7 +21,8 @@ class Span {
 		void	addNumber(int nb);
 		void	addNumbers(std::vector<int> l);
 		void	display();
-
+		void	addRandomNumbers(unsigned int quantity);
+		
 		int	shortestSpan();
 		int	longestSpan();
 
