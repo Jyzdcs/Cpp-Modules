@@ -2,6 +2,7 @@
 #define BITCOIN_EXCHANGE_HPP
 
 #include <iostream>
+#include <map>
 #include <list>
 #include <fstream>
 #include <string>
@@ -11,28 +12,25 @@
 
 class BitcoinExchange {
 	private:
-		std::list<std::string>	_lines;
-		std::list<std::string>	_dataCsv;
-		const std::string& list_at(const std::list<std::string> &lst, std::size_t index);
-		std::string& modify_list_at(std::list<std::string> &lst, std::size_t index);
+		std::map<int, std::string>	_lines;
+		std::map<int, double>	_dataCsv;
+		std::string	extractDateFromCsv(std::string line);
+		std::string	extractDateFromTxt(std::string line);
 		std::string	intToString(int value);
+		int		dateToInt(std::string date);
+		double	extractValueFromCsv(std::string line);
+		
 		void	splitDateIntoVector(std::string date, std::list<std::string> &v);
 		bool	isValidNumber(std::string str);
 		bool	isValidDateFormat(std::string date);
-		bool	isOnlyDigit(std::string str);
-
-		double	searchInDays(std::string year, std::string month);
-		double	searchInMonths(std::string year);
-		double	searchInYears(std::string year);
-
-
+		bool	isOnlyDigitAndHyphen(std::string str);
 	public:
 		BitcoinExchange();
 		~BitcoinExchange();
 
 		bool	isValidExtension(std::string fileName);
 
-		double		closestDateValue(std::string date);
+		double		closestDateValue(int date);
 		double		getDateValue(std::string date);
 
 		void	calculBtc();
@@ -49,7 +47,7 @@ class BitcoinExchange {
 				FileHandler();
 				~FileHandler();
 				
-				std::list<std::string> _fileContent;
+				std::map<int, std::string> _fileContent;
 
 				void	extractFileContent(std::string path);
 				void	printFileContent();
